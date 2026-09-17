@@ -6,7 +6,7 @@ html_content = """<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>وثيقة مشروع نُور - بطل رحلتك القرآنية</title>
+<title>وثيقة مشروع رِحْلة - بطل رحلتك القرآنية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -439,7 +439,7 @@ html_content = """<!DOCTYPE html>
   <div class="corner-ornament co-br"></div>
 
   <div class="doc-header">
-    <div class="brand">مشروع نُور <span>✦</span> الفلسفة والميثاق التربوي</div>
+    <div class="brand">مشروع رِحْلة <span>✦</span> الفلسفة والميثاق التربوي</div>
     <div class="doc-id">SECTION 01 / 04</div>
   </div>
 
@@ -466,7 +466,7 @@ html_content = """<!DOCTYPE html>
     <div class="card emerald-border">
       <div class="card-title" style="color: #34d399;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        فلسفة مشروع «نُور» (النموذج الفريد)
+        فلسفة مشروع «رِحْلة» (النموذج الفريد)
       </div>
       <p>
         • <strong>القرآن هو الجائزة والنور:</strong> لا ألعاب مصطنعة، التلاوة ذاتها هي مصدر البهجة والضياء.<br>
@@ -518,7 +518,7 @@ html_content = """<!DOCTYPE html>
   </div>
 
   <div class="page-footer">
-    <span>مشروع نُور — بطل رحلتك القرآنية</span>
+    <span>مشروع رِحْلة — بطل رحلتك القرآنية</span>
     <span>وثيقة التصميم المعماري الشامل</span>
     <span>صفحة 2 من 5</span>
   </div>
@@ -534,7 +534,7 @@ html_content = """<!DOCTYPE html>
   <div class="corner-ornament co-br"></div>
 
   <div class="doc-header">
-    <div class="brand">مشروع نُور <span>✦</span> المنهجية القرآنية</div>
+    <div class="brand">مشروع رِحْلة <span>✦</span> المنهجية القرآنية</div>
     <div class="doc-id">SECTION 02 / 04</div>
   </div>
 
@@ -599,7 +599,7 @@ html_content = """<!DOCTYPE html>
   </div>
 
   <div class="page-footer">
-    <span>مشروع نُور — بطل رحلتك القرآنية</span>
+    <span>مشروع رِحْلة — بطل رحلتك القرآنية</span>
     <span>وثيقة التصميم المعماري الشامل</span>
     <span>صفحة 3 من 5</span>
   </div>
@@ -615,7 +615,7 @@ html_content = """<!DOCTYPE html>
   <div class="corner-ornament co-br"></div>
 
   <div class="doc-header">
-    <div class="brand">مشروع نُور <span>✦</span> خريطة الشاشات والتدفق</div>
+    <div class="brand">مشروع رِحْلة <span>✦</span> خريطة الشاشات والتدفق</div>
     <div class="doc-id">SECTION 03 / 04</div>
   </div>
 
@@ -724,7 +724,7 @@ html_content = """<!DOCTYPE html>
   </table>
 
   <div class="page-footer">
-    <span>مشروع نُور — بطل رحلتك القرآنية</span>
+    <span>مشروع رِحْلة — بطل رحلتك القرآنية</span>
     <span>وثيقة التصميم المعماري الشامل</span>
     <span>صفحة 4 من 5</span>
   </div>
@@ -740,7 +740,7 @@ html_content = """<!DOCTYPE html>
   <div class="corner-ornament co-br"></div>
 
   <div class="doc-header">
-    <div class="brand">مشروع نُور <span>✦</span> الهوية والتنفيذ الفني</div>
+    <div class="brand">مشروع رِحْلة <span>✦</span> الهوية والتنفيذ الفني</div>
     <div class="doc-id">SECTION 04 / 04</div>
   </div>
 
@@ -815,7 +815,7 @@ html_content = """<!DOCTYPE html>
   </div>
 
   <div class="page-footer">
-    <span>مشروع نُور — بطل رحلتك القرآنية</span>
+    <span>مشروع رِحْلة — بطل رحلتك القرآنية</span>
     <span>وثيقة التصميم المعماري الشامل</span>
     <span>صفحة 5 من 5</span>
   </div>
@@ -825,8 +825,8 @@ html_content = """<!DOCTYPE html>
 </html>
 """
 
-html_path = "d:/quraan project/noor_master_concept.html"
-pdf_path = "d:/quraan project/noor_master_concept.pdf"
+html_path = "d:/quraan project/re7la_concept_overview.html"
+pdf_path = "d:/quraan project/re7la_concept_overview.pdf"
 
 with open(html_path, "w", encoding="utf-8") as f:
     f.write(html_content)

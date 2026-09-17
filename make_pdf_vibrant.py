@@ -6,7 +6,7 @@ html_content = """<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>مشروع نُور - رحلة حفظ القرآن</title>
+<title>مشروع رِحْلة - رحلة حفظ القرآن</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,400&family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -425,7 +425,7 @@ html_content = """<!DOCTYPE html>
   <div class="corner-decor cd-br"></div>
 
   <div class="doc-header">
-    <div class="brand">مشروع نُور <span>✦</span> خريطة الرحلة والشاشات الحية</div>
+    <div class="brand">مشروع رِحْلة <span>✦</span> خريطة الرحلة والشاشات الحية</div>
     <div class="doc-id">SECTION 01 / 04</div>
   </div>
 
@@ -485,7 +485,7 @@ html_content = """<!DOCTYPE html>
   </div>
 
   <div class="page-footer">
-    <span>مشروع نُور — رحلة حفظ القرآن</span>
+    <span>مشروع رِحْلة — رحلة حفظ القرآن</span>
     <span>التصميم المعماري النهاري المعتمد</span>
     <span>صفحة 2 من 5</span>
   </div>
@@ -501,7 +501,7 @@ html_content = """<!DOCTYPE html>
   <div class="corner-decor cd-br"></div>
 
   <div class="doc-header">
-    <div class="brand">مشروع نُور <span>✦</span> المعمارية التقنية والتخزين المحلي</div>
+    <div class="brand">مشروع رِحْلة <span>✦</span> المعمارية التقنية والتخزين المحلي</div>
     <div class="doc-id">SECTION 02 / 04</div>
   </div>
 
@@ -547,7 +547,7 @@ html_content = """<!DOCTYPE html>
   </div>
 
   <div class="page-footer">
-    <span>مشروع نُور — رحلة حفظ القرآن</span>
+    <span>مشروع رِحْلة — رحلة حفظ القرآن</span>
     <span>التصميم المعماري النهاري المعتمد</span>
     <span>صفحة 3 من 5</span>
   </div>
@@ -563,7 +563,7 @@ html_content = """<!DOCTYPE html>
   <div class="corner-decor cd-br"></div>
 
   <div class="doc-header">
-    <div class="brand">مشروع نُور <span>✦</span> مصفوفة الأزرار والتدفق</div>
+    <div class="brand">مشروع رِحْلة <span>✦</span> مصفوفة الأزرار والتدفق</div>
     <div class="doc-id">SECTION 03 / 04</div>
   </div>
 
@@ -648,7 +648,7 @@ html_content = """<!DOCTYPE html>
   </table>
 
   <div class="page-footer">
-    <span>مشروع نُور — رحلة حفظ القرآن</span>
+    <span>مشروع رِحْلة — رحلة حفظ القرآن</span>
     <span>التصميم المعماري النهاري المعتمد</span>
     <span>صفحة 4 من 5</span>
   </div>
@@ -664,7 +664,7 @@ html_content = """<!DOCTYPE html>
   <div class="corner-decor cd-br"></div>
 
   <div class="doc-header">
-    <div class="brand">مشروع نُور <span>✦</span> الهوية النهارية ومنصة Stitch</div>
+    <div class="brand">مشروع رِحْلة <span>✦</span> الهوية النهارية ومنصة Stitch</div>
     <div class="doc-id">SECTION 04 / 04</div>
   </div>
 
@@ -729,7 +729,7 @@ html_content = """<!DOCTYPE html>
   </div>
 
   <div class="page-footer">
-    <span>مشروع نُور — رحلة حفظ القرآن</span>
+    <span>مشروع رِحْلة — رحلة حفظ القرآن</span>
     <span>التصميم المعماري النهاري المعتمد</span>
     <span>صفحة 5 من 5</span>
   </div>
@@ -739,8 +739,8 @@ html_content = """<!DOCTYPE html>
 </html>
 """
 
-html_path = "d:/quraan project/noor_master_concept.html"
-pdf_path = "d:/quraan project/noor_master_concept.pdf"
+html_path = "d:/quraan project/re7la_master_concept.html"
+pdf_path = "d:/quraan project/re7la_master_concept.pdf"
 
 with open(html_path, "w", encoding="utf-8") as f:
     f.write(html_content)

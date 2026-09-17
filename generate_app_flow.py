@@ -1884,6 +1884,11 @@ def get_html_content():
           <div class="step-name">الهدية المرتقبة</div>
         </div>
         <div class="step-arrow">➔</div>
+        <div class="journey-step-node" id="journeyStep4" onclick="scrollToMockCard('mock-s4')">
+          <div class="step-circle" style="background:#fef3c7; color:#b45309; border-color:#fde68a;">4</div>
+          <div class="step-name">إعدادات الأهل 🔒</div>
+        </div>
+        <div class="step-arrow">➔</div>
         <div class="journey-step-node" id="journeyStep5" onclick="scrollToMockCard('mock-s5')">
           <div class="step-circle">5</div>
           <div class="step-name">الترديد مع المنشاوي</div>
@@ -1892,11 +1897,6 @@ def get_html_content():
         <div class="journey-step-node" id="journeyStep6" onclick="scrollToMockCard('mock-s6')">
           <div class="step-circle">6</div>
           <div class="step-name">الاحتفال والمكافأة</div>
-        </div>
-        <div style="margin-right: auto; padding-right: 14px;">
-          <span class="meta-tag parent" onclick="scrollToMockCard('mock-s4')" style="cursor: pointer;">
-            🔒 نافذة بوابة الوالدين (شاشة 4)
-          </span>
         </div>
       </div>
 
@@ -2073,16 +2073,16 @@ def get_html_content():
               </div>
 
               <!-- Category Pills -->
-              <div style="display: flex; gap: 4px; margin-bottom: 12px;">
-                <button class="mock-btn gold" style="flex: 1; padding: 4px 6px; font-size: 0.72rem;">سيارات 🏎️</button>
-                <button class="mock-btn secondary" style="flex: 1; padding: 4px 6px; font-size: 0.72rem;">حيوانات 🦁</button>
-                <button class="mock-btn secondary" style="flex: 1; padding: 4px 6px; font-size: 0.72rem;">طائرات ✈️</button>
+              <div style="display: flex; gap: 4px; margin-bottom: 12px;" id="giftCategoryTabs">
+                <button class="mock-btn gold" style="flex: 1; padding: 4px 6px; font-size: 0.72rem;" onclick="selectToyCategory('cars', this)">سيارات 🏎️</button>
+                <button class="mock-btn secondary" style="flex: 1; padding: 4px 6px; font-size: 0.72rem;" onclick="selectToyCategory('animals', this)">حيوانات 🦁</button>
+                <button class="mock-btn secondary" style="flex: 1; padding: 4px 6px; font-size: 0.72rem;" onclick="selectToyCategory('planes', this)">طائرات ✈️</button>
               </div>
 
               <!-- Selected Toy Showcase -->
               <div style="background: #ffffff; border-radius: var(--radius-lg); border: 2px solid #f59e0b; padding: 14px; text-align: center; margin-bottom: 12px;">
-                <div style="font-size: 3.5rem; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.15));">🏎️</div>
-                <div style="font-weight: 800; color: #b45309; font-size: 0.95rem; margin-top: 4px;">سيارة السباق الحمراء السريعة</div>
+                <div id="selectedToyEmoji" style="font-size: 3.5rem; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.15));" class="animate-bounce">🏎️</div>
+                <div id="selectedToyName" style="font-weight: 800; color: #b45309; font-size: 0.95rem; margin-top: 4px;">سيارة السباق الحمراء السريعة</div>
                 <div style="font-size: 0.72rem; color: #78350f;">ستوضع بالصندوق لتفتحها بعد إتمام السورة!</div>
               </div>
 
@@ -2128,8 +2128,8 @@ def get_html_content():
               <div style="background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: var(--radius-md); padding: 7px 9px; margin-bottom: 8px;">
                 <div style="font-size: 0.7rem; color: #047857; font-weight: 800; margin-bottom: 4px;">أفاتار الطفل وصورة الوجه (محلياً 100%):</div>
                 <div style="display: flex; gap: 4px;">
-                  <button class="mock-btn" style="flex: 1; padding: 4px; font-size: 0.7rem; background: #059669;">👦 عمر</button>
-                  <button class="mock-btn subtle" style="flex: 1; padding: 4px; font-size: 0.7rem;">👧 مريم</button>
+                  <button class="mock-btn" style="flex: 1; padding: 4px; font-size: 0.7rem; background: #059669;" onclick="setPhoneHero('boy')">👦 عمر</button>
+                  <button class="mock-btn subtle" style="flex: 1; padding: 4px; font-size: 0.7rem;" onclick="setPhoneHero('girl')">👧 مريم</button>
                   <button class="mock-btn subtle" style="flex: 1.2; padding: 4px; font-size: 0.68rem; background: #ecfdf5; color: #047857; border: 1px dashed #10b981;" onclick="showToast('📸 صورة الطفل تُدمج على الأفاتار وتُحفظ في IndexedDB')">📸 صورة الطفل</button>
                 </div>
               </div>
@@ -2148,18 +2148,18 @@ def get_html_content():
               <div style="margin-bottom: 8px;">
                 <div style="font-size: 0.7rem; color: #334155; font-weight: 800; margin-bottom: 4px;">تكرار الآية للطفل:</div>
                 <div style="display: flex; justify-content: space-between; gap: 4px;">
-                  <div class="repetition-circle-btn">1</div>
-                  <div class="repetition-circle-btn">2</div>
-                  <div class="repetition-circle-btn active">3</div>
-                  <div class="repetition-circle-btn">4</div>
-                  <div class="repetition-circle-btn">5</div>
+                  <div class="repetition-circle-btn" onclick="setRepetitions(1, this)">1</div>
+                  <div class="repetition-circle-btn" onclick="setRepetitions(2, this)">2</div>
+                  <div class="repetition-circle-btn active" onclick="setRepetitions(3, this)">3</div>
+                  <div class="repetition-circle-btn" onclick="setRepetitions(4, this)">4</div>
+                  <div class="repetition-circle-btn" onclick="setRepetitions(5, this)">5</div>
                 </div>
               </div>
 
               <!-- Auto-play Toggle -->
-              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 6px 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 6px 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; cursor: pointer;" onclick="toggleAutoPlay()">
                 <span style="font-size: 0.7rem; color: #1e293b; font-weight: 700;">تشغيل تلقائي للآيات بدون لمس:</span>
-                <span style="color: #10b981; font-weight: 900; font-size: 0.75rem;">مُفَعَّل ✓</span>
+                <span id="autoPlayStatusText" style="color: #10b981; font-weight: 900; font-size: 0.75rem;">مُفَعَّل ✓</span>
               </div>
 
               <!-- Math Challenge (Security) -->
@@ -2195,7 +2195,7 @@ def get_html_content():
                   🔒
                 </div>
                 <span style="font-family: var(--font-amiri); font-weight: bold; font-size: 1.1rem; color: #047857;">سُورَةُ الفَلَقِ</span>
-                <span style="font-size: 0.7rem; color: #0369a1; font-weight: 800;">الآية 1 من 5</span>
+                <span style="font-size: 0.7rem; color: #0369a1; font-weight: 800;" id="simVerseCounter">الآية 1 من 5</span>
               </div>
 
               <!-- 5 Verse Progress Circles (Surat Al-Falaq) -->
@@ -2214,10 +2214,10 @@ def get_html_content():
                   ﴿ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴾
                 </div>
                 <!-- Recitation Mode Toggles -->
-                <div style="display: flex; gap: 4px; justify-content: center;">
-                  <button class="mock-btn" style="background: #059669; padding: 4px 8px; font-size: 0.65rem; font-weight: 800;">🌿 الشيخ والأطفال</button>
-                  <button class="mock-btn subtle" style="padding: 4px 8px; font-size: 0.65rem;">🌊 الشيخ فقط</button>
-                  <button class="mock-btn subtle" style="padding: 4px 8px; font-size: 0.65rem;" onclick="showToast('الانتقال للآية التالية ⏭️')">⏭️ تخطي</button>
+                <div style="display: flex; gap: 4px; justify-content: center;" id="recitationModeBtns">
+                  <button class="mock-btn active" style="background: #059669; padding: 4px 8px; font-size: 0.65rem; font-weight: 800;" onclick="setRecitationMode('teacher', this)">🌿 الشيخ والأطفال</button>
+                  <button class="mock-btn subtle" style="padding: 4px 8px; font-size: 0.65rem;" onclick="setRecitationMode('sheikh_only', this)">🌊 الشيخ فقط</button>
+                  <button class="mock-btn subtle" style="padding: 4px 8px; font-size: 0.65rem;" onclick="advanceToNextVerse()">⏭️ الآية التالية</button>
                 </div>
               </div>
 
@@ -2226,15 +2226,15 @@ def get_html_content():
                 <div style="font-size: 2.2rem;">🌳</div>
                 <div id="simAvatarGraphic" style="font-size: 3rem; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.1));" class="animate-bounce">👦📖</div>
                 <div style="text-align: right;">
-                  <div style="font-size: 0.72rem; font-weight: 900; color: #047857;">عمر يستمع تحت الشجرة</div>
-                  <div style="font-size: 0.62rem; color: #64748b;">ممسكاً بمصحفه الأخضر</div>
+                  <div style="font-size: 0.72rem; font-weight: 900; color: #047857;" id="simAvatarStatusTitle">عمر يستمع تحت الشجرة</div>
+                  <div style="font-size: 0.62rem; color: #64748b;" id="simAvatarStatusBadge">ممسكاً بمصحفه الأخضر</div>
                 </div>
               </div>
 
               <!-- Interactive Wave Visualizer / Peek-a-boo Tap Area -->
               <div class="peekaboo-visualizer" onclick="simulateParentInvisibleTap()" title="اضغط لمحاكاة لمسة الوالد الخفية" style="padding: 6px;">
                 <div style="font-size: 0.72rem; font-weight: 800; color: #047857;" id="simWaveTitle">
-                  تلاوة المنشاوي المعلم (سورة الفلق)
+                  تلاوة المنشاوي المعلم (سورة الفلق - الآية 1 من 5)
                 </div>
                 <div class="wave-bars" id="simWaveBars">
                   <div class="wave-bar"></div>
@@ -2252,7 +2252,7 @@ def get_html_content():
               <div style="margin-top: auto; text-align: center; padding-bottom: 4px;">
                 <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
                   <span style="font-size: 1.8rem;" id="simTreasureBox" class="animate-pulse">📦🔒</span>
-                  <span style="font-size: 0.68rem; color: #92400e; font-weight: 800;">سيارة السباق بالداخل 🏎️ (تهتز شوقاً للفتح!)</span>
+                  <span style="font-size: 0.68rem; color: #92400e; font-weight: 800;"><span id="simTreasureToyPreview">🏎️</span> الهدية بالداخل (تهتز شوقاً للفتح!)</span>
                 </div>
                 <div style="margin-top: 4px;">
                   <button class="mock-btn primary" style="width: 100%; padding: 7px; font-size: 0.78rem; background: #10b981; font-weight: 900;" onclick="simulateSurahCompletion()">
@@ -2293,7 +2293,7 @@ def get_html_content():
               <div style="background: radial-gradient(circle, #f5d0fe 0%, transparent 70%); padding: 14px; text-align: center; margin: 4px 0; border-radius: var(--radius-lg); position: relative;">
                 <div id="unboxedToy" style="font-size: 3.8rem; filter: drop-shadow(0 10px 20px rgba(124, 58, 237, 0.3)); transition: transform 0.4s;" class="animate-bounce">🏎️</div>
                 <div style="font-size: 1.6rem; margin-top: -8px;">📦🔓✨</div>
-                <div style="font-size: 0.78rem; font-weight: 900; color: #581c87; margin-top: 4px;">انفتحت هدية سيارة السباق في الحديقة!</div>
+                <div id="unboxedToyText" style="font-size: 0.78rem; font-weight: 900; color: #581c87; margin-top: 4px;">انفتحت هدية سيارة السباق في الحديقة!</div>
               </div>
 
               <!-- Action Buttons -->
@@ -2304,7 +2304,7 @@ def get_html_content():
                 <button class="mock-btn primary" style="background: #059669; padding: 8px; font-size: 0.82rem; font-weight: 800;" onclick="navigateToScreenMock(2, 'سورة جديدة وهدية جديدة', 'btn-s6-next')">
                   سورة جديدة وهدية جديدة 🚀
                 </button>
-                <button class="mock-btn subtle" style="padding: 5px; font-size: 0.72rem;" onclick="navigateToScreenMock(5, 'إعادة تلاوة سورة الفلق للتثبيت', 'btn-s6-repeat')">
+                <button class="mock-btn subtle" style="padding: 5px; font-size: 0.72rem;" onclick="restartSurah()">
                   إعادة تلاوة سورة الفلق 🔁
                 </button>
               </div>
@@ -2604,11 +2604,11 @@ def get_html_content():
 
         <div class="stitch-modal-body">
           <pre class="stitch-code-block" id="stitchPromptText">
-=== GOOGLE STITCH SYSTEM DESIGN SPECIFICATION: RE7LA QURAN APP ===
-Project: Re7la (رِحْلة - طريق رحلة حفظ القرآن)
+=== GOOGLE STITCH SYSTEM DESIGN SPECIFICATION: RE7LA PROJECT ===
+Project: Re7la (مشروع رِحْلة - طريق رحلة حفظ القرآن)
 Target Audience: Children aged 3-5 with co-learning parents
-Art Direction: Warm modern Islamic garden aesthetic, 3D gentle clay/cartoon style (Pixar quality), emerald green (#047857), honey gold (#f59e0b), cream paper canvas (#faf8f5), rounded friendly geometry.
-Typography: High-legibility Quranic Naskh / Cairo Arabic font with complete RTL.
+Art Direction: Sunny Daylight Garden aesthetic, 3D Pixar-style playful cartoon, Sky Radiant (#38bdf8), Meadow Lime (#84cc16), Cobblestone Gold (#facc15), Mosque Teal (#0d9488), Pure White (#ffffff).
+Typography: Authentic Quranic Amiri for Quranic verses, Cairo / Tajawal for UI with full RTL.
           </pre>
         </div>
         
@@ -3518,8 +3518,140 @@ Actions:
     // ==========================================
     // 6. SCREEN 5 AUDIO PEEK-A-BOO SIMULATOR
     // ==========================================
+    // 6. SCREEN 5 AUDIO PEEK-A-BOO & RECITATION ENGINE (SURAT AL-FALAQ)
+    // ==========================================
+    const FALAQ_VERSES = [
+      { num: 1, text: "﴿ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴾", meaning: "قل أعوذ برب الصبح وضياء النهار" },
+      { num: 2, text: "﴿ مِن شَرِّ مَا خَلَقَ ﴾", meaning: "من شر كل مخلوق فيه شر" },
+      { num: 3, text: "﴿ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴾", meaning: "ومن شر ليل شديد الظلمة إذا دخل" },
+      { num: 4, text: "﴿ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴾", meaning: "ومن شر الساحرات اللاتي يعقدن العقد" },
+      { num: 5, text: "﴿ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴾", meaning: "ومن شر حاسد يتمنى زوال النعمة" }
+    ];
+
+    const TOY_ITEMS = {
+      cars: { emoji: "🏎️", name: "سيارة السباق الحمراء السريعة" },
+      animals: { emoji: "🦁", name: "الأسد الشجاع اللطيف" },
+      planes: { emoji: "✈️", name: "طائرة الاستكشاف الزرقاء" }
+    };
+    let selectedToyKey = "cars";
     let isSheikhTurn = true;
     let currentVerseNumber = 1;
+    let currentRepetitions = 3;
+    let isAutoPlayEnabled = true;
+
+    function selectToyCategory(cat, btnEl) {
+      playChime('click');
+      selectedToyKey = cat;
+      const toy = TOY_ITEMS[cat];
+      if (!toy) return;
+
+      document.querySelectorAll("#giftCategoryTabs button").forEach(b => {
+        b.className = "mock-btn secondary";
+        b.style.cssText = "flex: 1; padding: 4px 6px; font-size: 0.72rem;";
+      });
+      if (btnEl) {
+        btnEl.className = "mock-btn gold";
+        btnEl.style.cssText = "flex: 1; padding: 4px 6px; font-size: 0.72rem;";
+      }
+
+      const emojiEl = document.getElementById("selectedToyEmoji");
+      const nameEl = document.getElementById("selectedToyName");
+      if (emojiEl) emojiEl.textContent = toy.emoji;
+      if (nameEl) nameEl.textContent = toy.name;
+
+      const s5Toy = document.getElementById("simTreasureToyPreview");
+      if (s5Toy) s5Toy.textContent = toy.emoji;
+      const unboxedToy = document.getElementById("unboxedToy");
+      if (unboxedToy) unboxedToy.textContent = toy.emoji;
+      const unboxedText = document.getElementById("unboxedToyText");
+      if (unboxedText) unboxedText.textContent = `انفتحت هدية ${toy.name} في الحديقة!`;
+
+      showToast(`🎁 تم اختيار الهدية: ${toy.name}`);
+    }
+
+    function setRepetitions(n, el) {
+      playChime('click');
+      currentRepetitions = n;
+      document.querySelectorAll(".repetition-circle-btn").forEach(c => c.classList.remove("active"));
+      if (el) el.classList.add("active");
+      showToast(`🔁 تم ضبط تكرار الآية إلى ${n} مرات`);
+    }
+
+    function toggleAutoPlay() {
+      playChime('click');
+      isAutoPlayEnabled = !isAutoPlayEnabled;
+      const badge = document.getElementById("autoPlayStatusText");
+      if (badge) {
+        badge.textContent = isAutoPlayEnabled ? "مُفَعَّل ✓" : "مُعَطَّل ✕";
+        badge.style.color = isAutoPlayEnabled ? "#10b981" : "#ef4444";
+      }
+      showToast(isAutoPlayEnabled ? "⚡ تم تفعيل التشغيل التلقائي للآيات" : "⏸️ تم تعطيل التشغيل التلقائي");
+    }
+
+    function setRecitationMode(mode, btnEl) {
+      playChime('click');
+      document.querySelectorAll("#recitationModeBtns .mock-btn").forEach(b => {
+        b.classList.remove("active");
+        b.classList.add("subtle");
+      });
+      if (btnEl) {
+        btnEl.classList.remove("subtle");
+        btnEl.classList.add("active");
+      }
+      if (mode === 'teacher') {
+        showToast("🌿 تم تفعيل نمط المصحف المعلم (الشيخ مع ترديد الأطفال)");
+      } else {
+        showToast("🌊 تم تفعيل نمط الشيخ المنشاوي مفرداً");
+      }
+    }
+
+    function updateVerseDisplay(num) {
+      const verseTextEl = document.getElementById("quranVerseText");
+      const verseCounterEl = document.getElementById("simVerseCounter");
+      const waveTitleEl = document.getElementById("simWaveTitle");
+
+      if (verseTextEl && FALAQ_VERSES[num - 1]) {
+        verseTextEl.textContent = FALAQ_VERSES[num - 1].text;
+      }
+      if (verseCounterEl) {
+        verseCounterEl.textContent = `الآية ${num} من 5`;
+      }
+      if (waveTitleEl) {
+        waveTitleEl.textContent = `تلاوة المنشاوي المعلم (سورة الفلق - الآية ${num} من 5)`;
+      }
+
+      updatePearls(num);
+    }
+
+    function updatePearls(num) {
+      for (let i = 1; i <= 5; i++) {
+        const p = document.getElementById(`pearl${i}`);
+        if (p) {
+          p.classList.remove("active", "done");
+          if (i < num) {
+            p.classList.add("done");
+            p.textContent = "✓";
+          } else if (i === num) {
+            p.classList.add("active");
+            p.textContent = String(i);
+          } else {
+            p.textContent = String(i);
+          }
+        }
+      }
+    }
+
+    function advanceToNextVerse() {
+      playChime('click');
+      if (currentVerseNumber >= 5) {
+        simulateSurahCompletion();
+      } else {
+        currentVerseNumber++;
+        isSheikhTurn = true;
+        updateVerseDisplay(currentVerseNumber);
+        showToast(`⏭️ الانتقال للآية ${currentVerseNumber} من سورة الفلق`);
+      }
+    }
 
     function simulateParentInvisibleTap() {
       playChime('click');
@@ -3531,47 +3663,59 @@ Actions:
       const sub = document.getElementById("simWaveSubtext");
 
       if (!isSheikhTurn) {
-        // Child's turn (Sheikh silent)
-        avatar.textContent = "😃";
-        avatar.style.transform = "scale(1.15)";
-        badge.innerHTML = "✨ دورك يا عمر! ردد الآية لبابا وماما في الغرفة";
-        badge.style.borderColor = "#f59e0b";
-        badge.style.color = "#b45309";
-        title.textContent = "وقفة الصمت المحسوبة للترديد (لعبة الصوت الغائب)";
-        sub.textContent = "الطفل يقرأ لوالديه في الغرفة بدون مايكروفون";
+        // Child's turn (Audio Peek-a-boo: Sheikh is silent)
+        if (avatar) {
+          avatar.textContent = "😃📖";
+          avatar.style.transform = "scale(1.15)";
+        }
+        if (badge) {
+          badge.innerHTML = "✨ دورك يا عمر! ردد الآية لبابا وماما في الغرفة";
+          badge.style.color = "#b45309";
+          badge.style.fontWeight = "800";
+        }
+        if (title) title.textContent = "وقفة الصمت المحسوبة للترديد (لعبة الصوت الغائب)";
+        if (sub) sub.textContent = "الطفل يقرأ لوالديه في الغرفة بدون مايكروفون";
         showToast("🌟 وقفة الترديد: الطفل يقرأ لوالديه في الغرفة (Zero-Mic)");
       } else {
-        // Sheikh recitation state
-        avatar.textContent = "👦";
-        avatar.style.transform = "scale(1.0)";
-        badge.innerHTML = "🎙️ الشيخ المنشاوي يتلو الآية...";
-        badge.style.borderColor = "#10b981";
-        badge.style.color = "#065f46";
-        title.textContent = "بث التلاوة لفضيلة الشيخ المنشاوي المعلم";
-        sub.textContent = "👆 اضغط هنا لمحاكاة لمسة الوالد الخفية في أي مكان";
-        showToast("🎙️ الشيخ المنشاوي يتلو الآية المرجعية بخشوع");
-
-        // Advance pearls
-        currentVerseNumber = (currentVerseNumber % 4) + 1;
-        updatePearls(currentVerseNumber);
-      }
-    }
-
-    function updatePearls(num) {
-      for (let i = 1; i <= 4; i++) {
-        const p = document.getElementById(`pearl${i}`);
-        if (p) {
-          p.textContent = i <= num ? "🟢" : "⚪";
+        // Sheikh recitation state: advance verse or complete
+        if (currentVerseNumber >= 5) {
+          simulateSurahCompletion();
+          return;
         }
+        currentVerseNumber++;
+        if (avatar) {
+          avatar.textContent = "👦📖";
+          avatar.style.transform = "scale(1.0)";
+        }
+        if (badge) {
+          badge.innerHTML = "🎙️ الشيخ المنشاوي يتلو الآية...";
+          badge.style.color = "#065f46";
+          badge.style.fontWeight = "700";
+        }
+        if (sub) sub.textContent = "👆 اضغط هنا لمحاكاة لمسة الوالد الخفية في أي مكان";
+        showToast(`🎙️ الشيخ المنشاوي يتلو الآية ${currentVerseNumber} من سورة الفلق`);
+
+        updateVerseDisplay(currentVerseNumber);
       }
     }
 
     function simulateSurahCompletion() {
       playChime('celebrate');
-      showToast("🏆 اكتمال تلاوة سورة الإخلاص! انتقال تلقائي للاحتفال 🎉");
+      showToast("🏆 مبارك يا عُمَر! اكتمال تلاوة سورة الفلق بنجاح باهر! 🎉");
       setTimeout(() => {
-        navigateToScreenMock(6, 'اكتمال السورة ➔ الاحتفال', 'btn-s5-auto');
+        navigateToScreenMock(6, 'اكتمال سورة الفلق ➔ الاحتفال وفتح الكنز', 'btn-s5-auto');
       }, 700);
+    }
+
+    function restartSurah() {
+      currentVerseNumber = 1;
+      isSheikhTurn = true;
+      updateVerseDisplay(1);
+      const avatar = document.getElementById("simAvatarGraphic");
+      if (avatar) avatar.textContent = "👦📖";
+      const badge = document.getElementById("simAvatarStatusBadge");
+      if (badge) badge.innerHTML = "ممسكاً بمصحفه الأخضر";
+      navigateToScreenMock(5, 'إعادة تلاوة سورة الفلق للتثبيت', 'btn-s6-repeat');
     }
 
     function triggerToyPlayAnimation() {
@@ -3586,7 +3730,8 @@ Actions:
           toy.style.transform = "translateX(0) rotate(0deg) scale(1)";
         }, 700);
       }
-      showToast("🏎️ اللعبة تنطلق وتمرح مع الأفاتار في الحديقة القرآنية!");
+      const currentToy = TOY_ITEMS[selectedToyKey] || TOY_ITEMS.cars;
+      showToast(`${currentToy.emoji} ${currentToy.name} تنطلق وتمرح في حديقة القرآن!`);
     }
 
     // ==========================================
