@@ -1,0 +1,768 @@
+import os
+import subprocess
+import sys
+
+html_content = """<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مشروع نُور - رحلة حفظ القرآن</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,400&family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    background-color: #f0fdf4;
+    color: #0f172a;
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .page {
+    width: 210mm;
+    height: 297mm;
+    position: relative;
+    page-break-after: always;
+    page-break-inside: avoid;
+    padding: 16mm 18mm;
+    background: linear-gradient(180deg, #e0f2fe 0%, #f0fdf4 40%, #fefce8 100%);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Soft Playful Border Frame */
+  .page::before {
+    content: "";
+    position: absolute;
+    top: 8mm;
+    bottom: 8mm;
+    left: 8mm;
+    right: 8mm;
+    border: 2px solid rgba(56, 189, 248, 0.4);
+    border-radius: 20px;
+    pointer-events: none;
+  }
+  .page::after {
+    content: "";
+    position: absolute;
+    top: 10mm;
+    bottom: 10mm;
+    left: 10mm;
+    right: 10mm;
+    border: 1px dashed rgba(234, 179, 8, 0.4);
+    border-radius: 16px;
+    pointer-events: none;
+  }
+
+  /* Decorative Corner Sun/Flower */
+  .corner-decor {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: #facc15;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
+    pointer-events: none;
+  }
+  .cd-tl { top: 9mm; left: 9mm; }
+  .cd-tr { top: 9mm; right: 9mm; }
+  .cd-bl { bottom: 9mm; left: 9mm; }
+  .cd-br { bottom: 9mm; right: 9mm; }
+
+  /* Headers */
+  .doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(56, 189, 248, 0.25);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .doc-header .brand {
+    font-size: 15px;
+    font-weight: 900;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .doc-header .doc-id {
+    font-size: 10px;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-weight: 800;
+    padding: 3px 12px;
+    border-radius: 20px;
+    border: 1px solid #bae6fd;
+  }
+
+  .page-footer {
+    margin-top: auto;
+    border-top: 1.5px solid rgba(56, 189, 248, 0.25);
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4 {
+    margin: 0;
+    color: #0f172a;
+  }
+  .page-title {
+    font-size: 21px;
+    font-weight: 900;
+    color: #0369a1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .page-title span.badge {
+    font-size: 11px;
+    background: linear-gradient(135deg, #38bdf8, #0284c7);
+    color: #ffffff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 12px;
+  }
+
+  /* Cards & Grids */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .card.sky-border {
+    border-color: #7dd3fc;
+    background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+  }
+  .card.lime-border {
+    border-color: #a3e635;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fee7 100%);
+  }
+  .card.gold-border {
+    border-color: #fde047;
+    background: linear-gradient(180deg, #ffffff 0%, #fefce8 100%);
+  }
+  .card.coral-border {
+    border-color: #fda4af;
+    background: linear-gradient(180deg, #ffffff 0%, #fff1f2 100%);
+  }
+
+  .card-title {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #0284c7;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card p {
+    font-size: 11px;
+    line-height: 1.65;
+    color: #334155;
+    margin: 0;
+  }
+
+  /* ROADMAP MINI VISUAL */
+  .roadmap-preview {
+    background: linear-gradient(180deg, #7dd3fc 0%, #a7f3d0 40%, #bef264 100%);
+    border: 2px solid #38bdf8;
+    border-radius: 16px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .path-line {
+    width: 60px;
+    height: 100%;
+    margin: 0 auto;
+    border-left: 6px dashed #facc15;
+    border-right: 6px dashed #facc15;
+    background: #fef08a;
+  }
+
+  /* Table styling */
+  table.matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    margin-top: 6px;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+  table.matrix-table th {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 7px 10px;
+    text-align: right;
+    font-weight: 800;
+    border-bottom: 2px solid #bae6fd;
+  }
+  table.matrix-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #1e293b;
+    vertical-align: middle;
+  }
+  table.matrix-table tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+  .code-tag {
+    font-family: monospace;
+    font-size: 9.5px;
+    background: #ecfdf5;
+    color: #059669;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #a7f3d0;
+    font-weight: 700;
+  }
+  .dest-tag {
+    background: #fef3c7;
+    color: #b45309;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 800;
+  }
+
+  /* COVER PAGE STYLES */
+  .cover-page {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(180deg, #7dd3fc 0%, #e0f2fe 35%, #f0fdf4 70%, #fefce8 100%);
+  }
+  .sun-emblem {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 16px;
+    background: radial-gradient(circle, #fef08a 20%, #facc15 60%, #eab308 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 35px rgba(250, 204, 21, 0.8), 0 0 60px rgba(56, 189, 248, 0.4);
+    border: 4px solid #ffffff;
+  }
+  .cover-title {
+    font-size: 46px;
+    font-weight: 900;
+    color: #0284c7;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 10px rgba(2, 132, 199, 0.15);
+  }
+  .cover-title span {
+    color: #eab308;
+  }
+  .cover-subtitle {
+    font-size: 20px;
+    font-weight: 800;
+    color: #16a34a;
+    margin-bottom: 14px;
+  }
+  .cover-desc {
+    font-size: 13px;
+    color: #334155;
+    max-width: 530px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+  .cover-badges {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .c-badge {
+    background: #ffffff;
+    border: 1.5px solid #38bdf8;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 11.5px;
+    color: #0369a1;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(56, 189, 248, 0.15);
+  }
+  .c-badge.special {
+    background: linear-gradient(135deg, #facc15, #eab308);
+    border-color: #ca8a04;
+    color: #78350f;
+  }
+  .cover-meta-box {
+    background: #ffffff;
+    border: 2px solid #bae6fd;
+    border-radius: 16px;
+    padding: 14px 28px;
+    display: flex;
+    gap: 30px;
+    font-size: 11px;
+    color: #334155;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .meta-item strong {
+    color: #0284c7;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<!-- ========================================================================= -->
+<!-- PAGE 1: VIBRANT DAYLIGHT COVER                                            -->
+<!-- ========================================================================= -->
+<div class="page cover-page">
+  <div class="corner-decor cd-tl"></div>
+  <div class="corner-decor cd-tr"></div>
+  <div class="corner-decor cd-bl"></div>
+  <div class="corner-decor cd-br"></div>
+
+  <div class="sun-emblem">
+    <svg width="65" height="65" viewBox="0 0 24 24" fill="none" stroke="#78350f" stroke-width="2">
+      <circle cx="12" cy="12" r="5" fill="#fef08a"/>
+      <line x1="12" y1="1" x2="12" y2="3"/>
+      <line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/>
+      <line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+  </div>
+
+  <div class="cover-title">مشروع <span>«نُـور»</span></div>
+  <div class="cover-subtitle">رحلة حفظ القرآن — الدليل المعماري والبصري المعتمد</div>
+  
+  <p class="cover-desc">
+    وثيقة التصميم الشاملة لتطبيق تحفيظ جزء عم للأطفال (3-5 سنوات)، القائم على 
+    <strong>"طريق الحديقة الذهبي"</strong> ومصحف المنشاوي المعلم، بتصميم نهاري مبهج 
+    ومبتكر يبتعد تماماً عن الرداءة النمطية <strong>(Strict Anti-AI-Slop)</strong>، مع تشجيع بصوت الأب وصورة الطفل محلياً 100%.
+  </p>
+
+  <div class="cover-badges">
+    <div class="c-badge">الفئة: 3 إلى 5 سنوات</div>
+    <div class="c-badge">جزء عمّ كاملاً (37 سورة)</div>
+    <div class="c-badge special">ميثاق: تصميم أصيل مبهر (Anti-AI-Slop)</div>
+    <div class="c-badge">تشجيع صوت الأب الحقيقي (Local IndexedDB)</div>
+    <div class="c-badge">خريطة طريق الرحلة الحية</div>
+  </div>
+
+  <div class="cover-meta-box">
+    <div class="meta-item">
+      <strong>حالة الوثيقة</strong>
+      <span>الإصدار 4.0 النهاري المعتمد</span>
+    </div>
+    <div class="meta-item">
+      <strong>البطل المُلهم</strong>
+      <span>البطل الصغير "عُمَر" (3 سنوات)</span>
+    </div>
+    <div class="meta-item">
+      <strong>المعمارية التقنية</strong>
+      <span>Local-First (بدون سيرفر $0)</span>
+    </div>
+    <div class="meta-item">
+      <strong>الروح الفنية</strong>
+      <span>ستوديو أنيميشن في وضح النهار</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- PAGE 2: ROADMAP & SCREEN SEQUENCE (FROM PHOTOS)                           -->
+<!-- ========================================================================= -->
+<div class="page">
+  <div class="corner-decor cd-tl"></div>
+  <div class="corner-decor cd-tr"></div>
+  <div class="corner-decor cd-bl"></div>
+  <div class="corner-decor cd-br"></div>
+
+  <div class="doc-header">
+    <div class="brand">مشروع نُور <span>✦</span> خريطة الرحلة والشاشات الحية</div>
+    <div class="doc-id">SECTION 01 / 04</div>
+  </div>
+
+  <div class="page-title">
+    خريطة «طريق رحلة حفظ القرآن» وتسلسل الشاشات
+    <span class="badge">المطابقة للبروتوتايب الفعلي</span>
+  </div>
+
+  <div class="grid-3" style="margin-bottom: 12px;">
+    <div class="card sky-border">
+      <div class="card-title">
+        <span>🗺️</span> 1. خريطة الطريق الذهبي
+      </div>
+      <p>
+        • <strong>المشهد:</strong> تلال خضراء، سماء زرقاء، مسجد القبة الخضراء على اليسار، وشجرة ظليلة على اليمين.<br>
+        • <strong>المسار:</strong> طريق حجري ذهبي متعرج يصعد للأعلى حاملاً محطات السور (الناس ⬅️ الفلق ⬅️ الإخلاص ⬅️ المسد...).<br>
+        • <strong>البطل:</strong> "عمر" يقف بقدميه على سورة الفلق (المحطة الحالية).<br>
+        • <strong>اللافتة:</strong> <em>"كل يوم آية جديدة ❤️"</em>.
+      </p>
+    </div>
+
+    <div class="card lime-border">
+      <div class="card-title">
+        <span>⚙️</span> 2. نافذة إعدادات اللعب
+      </div>
+      <p>
+        • <strong>المودال:</strong> كارت أبيض ناعم عائم فوق الحديقة، والبطل "عمر" يجلس فوق حافته بلطف.<br>
+        • <strong>الشخصية:</strong> اختيار الأفاتار (عمر، بنت، أميرة، أو إضافة صورة وجه الطفل الحقيقي).<br>
+        • <strong>تشغيل تلقائي:</strong> مفتاح للتشغيل وراء بعض بدون لمس.<br>
+        • <strong>تكرار الآية للأطفال:</strong> أزرار دائرية مبهجة `[1, 2, 3, 4, 5]`.
+      </p>
+    </div>
+
+    <div class="card gold-border">
+      <div class="card-title">
+        <span>📖</span> 3. شاشة الترديد (سورة الفلق)
+      </div>
+      <p>
+        • <strong>دوائر التقدم:</strong> دوائر الآيات `(1) (2) (3) (4) (5)` في أعلى الشاشة.<br>
+        • <strong>كارت الآية:</strong> كارت ثلجي فاخر بالمنتصف بخط قرآني كبير: <strong>﴿قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ﴾</strong>.<br>
+        • <strong>البطل:</strong> عمر يقف تحت الشجرة ممسكاً بمصحفه الأخضر.<br>
+        • <strong>الأنماط:</strong> `الشيخ فقط` (أزرق) و `الشيخ والأطفال` (أخضر).
+      </p>
+    </div>
+  </div>
+
+  <!-- Anti-AI-Slop Manifesto Card -->
+  <div class="card coral-border" style="margin-bottom: 12px;">
+    <div class="card-title" style="color: #e11d48;">
+      <span>🚫</span> ميثاق مناهضة الـ (Strict Anti-AI-Slop Covenant)
+    </div>
+    <p style="font-size: 11px; line-height: 1.7;">
+      <strong>1. الرفض التام للأصوات الاصطناعية:</strong> لن يُستخدم أي صوت AI في التطبيق. الصوت المعتمد هو المصحف المعلم للشيخ المنشاوي، وصوت التشجيع هو **صوت الأب أو الأم الحقيقي فقط**.<br>
+      <strong>2. وضوح وبهجة النهار:</strong> إلغاء الخلفيات القاتمة تماماً؛ الواجهة تفيض بنور الشمس وتدرجات السماء الزرقاء والتلال الخضراء.<br>
+      <strong>3. أزرار ملموسة وطفولية:</strong> عناصر تحكم بارزة ثلاثية الأبعاد وناعمة صُممت خصيصاً لتفادي البرود الرقمي.
+    </p>
+  </div>
+
+  <div class="page-footer">
+    <span>مشروع نُور — رحلة حفظ القرآن</span>
+    <span>التصميم المعماري النهاري المعتمد</span>
+    <span>صفحة 2 من 5</span>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- PAGE 3: LOCAL-FIRST ARCHITECTURE (NO DATABASE)                            -->
+<!-- ========================================================================= -->
+<div class="page">
+  <div class="corner-decor cd-tl"></div>
+  <div class="corner-decor cd-tr"></div>
+  <div class="corner-decor cd-bl"></div>
+  <div class="corner-decor cd-br"></div>
+
+  <div class="doc-header">
+    <div class="brand">مشروع نُور <span>✦</span> المعمارية التقنية والتخزين المحلي</div>
+    <div class="doc-id">SECTION 02 / 04</div>
+  </div>
+
+  <div class="page-title">
+    معمارية التخزين المحلي بدون سيرفرات
+    <span class="badge">Zero Database / Local-First PWA</span>
+  </div>
+
+  <div class="grid-2" style="margin-bottom: 12px;">
+    <div class="card sky-border">
+      <div class="card-title">
+        <span>🎙️</span> تسجيل صوت الأب وتشجيعه (Parent Voice)
+      </div>
+      <p>
+        • <strong>كيف يسجل الأب؟</strong> من شاشة الإعدادات، يضغط الوالد على زر التسجيل ويسجل صوته الحقيقي: <em>"عاش يا عمر يا بطل! أنا فخور بيك يا حبيبي"</em>.<br>
+        • <strong>أين يُحفظ؟</strong> يُخزن كملف صوتي (`Blob`) داخل **`IndexedDB`** في متصفح الهاتف مباشرة.<br>
+        • <strong>متى يشتغل؟</strong> عند إتمام السورة، ينطلق صوت الأب الحقيقي مع تساقط القصاصات الاحتفالية ليعيش الطفل فرحة فخر أسرية لا تُنسى.
+      </p>
+    </div>
+
+    <div class="card lime-border">
+      <div class="card-title">
+        <span>📸</span> صورة وجه الطفل على الأفاتار (Child Photo)
+      </div>
+      <p>
+        • <strong>رفع الصورة:</strong> يختار الوالد صورة طفله من الهاتف بنقرة واحدة.<br>
+        • <strong>التركيب المحلي:</strong> كود الـ JavaScript يقوم بدمج وجه الطفل على جسم الأفاتار الكرتوني عبر تقنية الـ Canvas محلياً.<br>
+        • <strong>الحفظ:</strong> تُخزن الصورة محلياً في الـ `IndexedDB` دون رفعها لأي سيرفر نهائياً، لحماية خصوصية الأطفال 100%.
+      </p>
+    </div>
+  </div>
+
+  <!-- Why Local-First Wins Card -->
+  <div class="card gold-border" style="margin-bottom: 12px;">
+    <div class="card-title" style="color: #b45309;">
+      <span>💡</span> لماذا معمارية (Local-First) هي الخيار الأذكى للمشروع؟
+    </div>
+    <p style="font-size: 11px; line-height: 1.7;">
+      1. <strong>تكلفة استضافة صفرية ($0 Server Cost):</strong> تطبيقك مجرد ملفات ثابتة (Static Web App) يمكن رفعها مجاناً للأبد على منصات Vercel أو Cloudflare Pages.<br>
+      2. <strong>أمان وخصوصية مطلقة (100% Child Privacy):</strong> لا توجد أي قاعدة بيانات على الإنترنت لكي تُخترق، وأصوات وصور أطفالك لا تغادر الهاتف أبداً.<br>
+      3. <strong>يعمل بدون إنترنت (100% Offline PWA):</strong> بمجرد فتح الموقع وإضافته لشاشة الهاتف الرئيسية، يفتح ويعمل بصوت المنشاوي وصوت الأب حتى في وضع الطيران وأثناء السفر.
+    </p>
+  </div>
+
+  <div class="page-footer">
+    <span>مشروع نُور — رحلة حفظ القرآن</span>
+    <span>التصميم المعماري النهاري المعتمد</span>
+    <span>صفحة 3 من 5</span>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- PAGE 4: SCREENS & BUTTONS MATRIX                                          -->
+<!-- ========================================================================= -->
+<div class="page">
+  <div class="corner-decor cd-tl"></div>
+  <div class="corner-decor cd-tr"></div>
+  <div class="corner-decor cd-bl"></div>
+  <div class="corner-decor cd-br"></div>
+
+  <div class="doc-header">
+    <div class="brand">مشروع نُور <span>✦</span> مصفوفة الأزرار والتدفق</div>
+    <div class="doc-id">SECTION 03 / 04</div>
+  </div>
+
+  <div class="page-title">
+    مصفوفة الشاشات والأزرار ومسارات التنقل
+    <span class="badge">Navigation & Actions Matrix</span>
+  </div>
+
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th style="width: 20%;">الشاشة</th>
+        <th style="width: 28%;">الزر / العنصر التفاعلي</th>
+        <th style="width: 18%;">نوع الإجراء</th>
+        <th style="width: 34%;">الوجهة والأثر التفاعلي</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="3"><strong>1. خريطة الطريق</strong><br><span style="font-size:8.5px; color:#64748b;">رحلة حفظ القرآن</span></td>
+        <td><span class="code-tag">SURAH_NODE[الفلق]</span> محطة السورة</td>
+        <td>Click</td>
+        <td><span class="dest-tag">فتح شاشة 3: الترديد لسورة الفلق</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-tag">BTN_SETTINGS_ICON</span> زر الترس ⚙️</td>
+        <td>Click</td>
+        <td><span class="dest-tag">فتح شاشة 2: نافذة إعدادات اللعب</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-tag">PROFILE_CHIP</span> شارة "عمر"</td>
+        <td>Click</td>
+        <td>عرض بطاقة إنجاز البطل ورتبته الحالية</td>
+      </tr>
+
+      <tr>
+        <td rowspan="3"><strong>2. إعدادات اللعب</strong><br><span style="font-size:8.5px; color:#64748b;">مودال عائم فوق الحديقة</span></td>
+        <td><span class="code-tag">SELECT_AVATAR</span> عمر / بنت / صورة</td>
+        <td>Select</td>
+        <td>تحديث مظهر البطل فورياً في الخريطة</td>
+      </tr>
+      <tr>
+        <td><span class="code-tag">RECORD_PARENT_VOICE</span> زر المايك 🎙️</td>
+        <td>Record / Save</td>
+        <td>تسجيل صوت الأب وحفظه في IndexedDB</td>
+      </tr>
+      <tr>
+        <td><span class="code-tag">REPETITION_PILLS</span> [ 1..5 ]</td>
+        <td>Select</td>
+        <td>تحديد عدد مرات تكرار الآية للطفل</td>
+      </tr>
+
+      <tr>
+        <td rowspan="3"><strong>3. شاشة الترديد</strong><br><span style="font-size:8.5px; color:#64748b;">كارت سورة الفلق</span></td>
+        <td><span class="code-tag">BTN_MINSHAWI_KIDS</span> الشيخ والأطفال</td>
+        <td>Toggle Active</td>
+        <td>تشغيل المصحف المعلم مع ترديد الأطفال</td>
+      </tr>
+      <tr>
+        <td><span class="code-tag">BTN_MINSHAWI_ONLY</span> الشيخ فقط</td>
+        <td>Toggle Active</td>
+        <td>تشغيل قراءة المنشاوي الفردية للاستماع</td>
+      </tr>
+      <tr>
+        <td><span class="code-tag">BTN_SKIP_VERSE</span> تخطي الآية ⏭️</td>
+        <td>Click</td>
+        <td>الانتقال للآية التالية في السورة</td>
+      </tr>
+
+      <tr>
+        <td rowspan="2"><strong>4. شاشة الاحتفال</strong><br><span style="font-size:8.5px; color:#64748b;">ختام السورة المبهج</span></td>
+        <td><span class="code-tag">AUTO_PARENT_VOICE</span> انطلاق صوت الأب</td>
+        <td>Auto Audio</td>
+        <td>تشغيل عبارة الأب: *"عاش يا عمر يا بطل!"*</td>
+      </tr>
+      <tr>
+        <td><span class="code-tag">BTN_NEXT_SURAH</span> "السورة التالية" 🚀</td>
+        <td>Click (CTA)</td>
+        <td><span class="dest-tag">قفز الأفاتار للمحطة التالية بالخريطة</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <span>مشروع نُور — رحلة حفظ القرآن</span>
+    <span>التصميم المعماري النهاري المعتمد</span>
+    <span>صفحة 4 من 5</span>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- PAGE 5: DAYLIGHT DESIGN TOKENS & STITCH PROMPTS                           -->
+<!-- ========================================================================= -->
+<div class="page">
+  <div class="corner-decor cd-tl"></div>
+  <div class="corner-decor cd-tr"></div>
+  <div class="corner-decor cd-bl"></div>
+  <div class="corner-decor cd-br"></div>
+
+  <div class="doc-header">
+    <div class="brand">مشروع نُور <span>✦</span> الهوية النهارية ومنصة Stitch</div>
+    <div class="doc-id">SECTION 04 / 04</div>
+  </div>
+
+  <div class="page-title">
+    لوحة ألوان البهجة والجاهزية لـ Google Stitch
+    <span class="badge">Vibrant Daylight Tokens</span>
+  </div>
+
+  <!-- Color Palette Swatches -->
+  <div style="margin-bottom: 12px;">
+    <div style="font-size: 11px; font-weight: 800; color: #0284c7; margin-bottom: 6px;">مصفوفة ألوان حديقة القرآن النهارية (Daylight Palette):</div>
+    <div class="grid-4">
+      <div class="card" style="background: #38bdf8; border-color: #0284c7; text-align: center; padding: 10px;">
+        <div style="font-weight: 900; font-size: 12px; color: #ffffff;">Sky Radiant</div>
+        <div style="font-size: 10px; color: #f0f9ff; font-family: monospace;">#38bdf8</div>
+        <div style="font-size: 8.5px; color: #e0f2fe; margin-top: 3px;">زرقة السماء الصافية</div>
+      </div>
+      <div class="card" style="background: #84cc16; border-color: #4d7c0f; text-align: center; padding: 10px;">
+        <div style="font-weight: 900; font-size: 12px; color: #ffffff;">Meadow Lime</div>
+        <div style="font-size: 10px; color: #f7fee7; font-family: monospace;">#84cc16</div>
+        <div style="font-size: 8.5px; color: #ecfccb; margin-top: 3px;">خضرة التلال والربيع</div>
+      </div>
+      <div class="card" style="background: #facc15; border-color: #ca8a04; text-align: center; padding: 10px;">
+        <div style="font-weight: 900; font-size: 12px; color: #78350f;">Cobble Gold</div>
+        <div style="font-size: 10px; color: #78350f; font-family: monospace;">#facc15</div>
+        <div style="font-size: 8.5px; color: #78350f; margin-top: 3px;">طريق الرحلة والنجوم</div>
+      </div>
+      <div class="card" style="background: #0d9488; border-color: #0f766e; text-align: center; padding: 10px;">
+        <div style="font-weight: 900; font-size: 12px; color: #ffffff;">Mosque Teal</div>
+        <div style="font-size: 10px; color: #ccfbf1; font-family: monospace;">#0d9488</div>
+        <div style="font-size: 8.5px; color: #f0fdfa; margin-top: 3px;">قبة المسجد الزمردية</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typography -->
+  <div class="grid-2" style="margin-bottom: 12px;">
+    <div class="card sky-border">
+      <div class="card-title">
+        <span>🖋️</span> الخطوط وتصميم النصوص
+      </div>
+      <p>
+        • <strong>النص القرآني:</strong> خط النسخ القرآني الشريف (Amiri / Naskh) بوزن عريض جداً مع تشكيل واضح.<br>
+        • <strong>عناوين وأزرار الواجهة:</strong> خط (Cairo و Tajawal) بوزن 800 و 900، متباعدة وواضحة تناسب عين الطفل.
+      </p>
+    </div>
+
+    <div class="card lime-border">
+      <div class="card-title">
+        <span>🎨</span> الجاهزية للتوليد عبر Google Stitch
+      </div>
+      <p>
+        • <strong>نمط التوليد في Stitch:</strong><br>
+        <em>"Mobile Web, Daylight Vibrant Cartoon, Pixar-style sunny meadow, lush green hills, golden stone road, zero dark tones, pure joy and clarity."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- Dedication Box -->
+  <div style="margin-top: 10px; text-align: center; font-size: 11px; color: #64748b; font-style: italic;">
+    "نسأل الله العلي القدير أن يبارك في هذا العمل، وأن يجعله سبباً في حب أولادنا للقرآن الكريم، وأن يبارك في البطل عمر ووالديه الكرام."
+  </div>
+
+  <div class="page-footer">
+    <span>مشروع نُور — رحلة حفظ القرآن</span>
+    <span>التصميم المعماري النهاري المعتمد</span>
+    <span>صفحة 5 من 5</span>
+  </div>
+</div>
+
+</body>
+</html>
+"""
+
+html_path = "d:/quraan project/noor_master_concept.html"
+pdf_path = "d:/quraan project/noor_master_concept.pdf"
+
+with open(html_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"[OK] Vibrant Daylight HTML written to: {html_path}")
+
+chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+edge_path = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+browser_path = chrome_path if os.path.exists(chrome_path) else edge_path
+
+cmd = [
+    browser_path,
+    "--headless",
+    "--disable-gpu",
+    f"--print-to-pdf={os.path.abspath(pdf_path)}",
+    "--no-pdf-header-footer",
+    os.path.abspath(html_path)
+]
+
+result = subprocess.run(cmd, capture_output=True, text=True)
+if result.returncode == 0 and os.path.exists(pdf_path):
+    size_kb = os.path.getsize(pdf_path) / 1024
+    print(f"[SUCCESS] Vibrant PDF generated: {pdf_path} ({size_kb:.1f} KB)")
+else:
+    print(f"[ERROR] Failed: {result.stderr}")
