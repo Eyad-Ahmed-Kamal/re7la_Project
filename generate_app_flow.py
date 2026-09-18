@@ -1669,33 +1669,30 @@ def get_html_content():
                 <!-- Screen Nodes Group -->
                 <g id="nodesGroup">
                   
-                  <!-- Screen 1: Onboarding & Hero Selection (Top Right) -->
+                  <!-- Screen 1: Winding Garden Roadmap & Hero Milestones (Top Right) -->
                   <g id="node-screen1" class="diagram-node selected" transform="translate(950, 80)" onclick="selectScreenNode(1)">
                     <rect class="node-rect" width="250" height="240" />
-                    <rect x="0" y="0" width="250" height="38" rx="16" ry="16" fill="#047857" />
-                    <text x="125" y="24" font-size="13" font-weight="900" fill="#ffffff" text-anchor="middle">1. الشاشة الرئيسية | اختيار البطل</text>
-                    <text x="125" y="60" font-size="11.5" font-weight="800" fill="#0f172a" text-anchor="middle">Onboarding & Hero Selection</text>
-                    <text x="125" y="78" font-size="10" fill="#059669" font-weight="700" text-anchor="middle">👤 المستخدم: الطفل والوالد معاً</text>
-                    <line x1="15" y1="90" x2="235" y2="90" stroke="#e2e8f0" stroke-width="1" />
+                    <rect x="0" y="0" width="250" height="38" rx="16" ry="16" fill="#0284c7" />
+                    <text x="125" y="24" font-size="13" font-weight="900" fill="#ffffff" text-anchor="middle">1. خريطة طريق حفظ القرآن</text>
+                    <text x="125" y="58" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle">مسار الحديقة الصاعد (The Roadmap)</text>
+                    <text x="125" y="74" font-size="9.5" fill="#0284c7" font-weight="700" text-anchor="middle">🕌 مسجد القبة | 🌳 الشجرة | 🪧 كل يوم آية</text>
+                    <line x1="15" y1="84" x2="235" y2="84" stroke="#e2e8f0" stroke-width="1" />
                     
                     <!-- Button Pills on Screen 1 -->
-                    <g class="diagram-btn-pill" transform="translate(15, 100)" onclick="event.stopPropagation(); triggerButtonFromDiagram('btn-s1-boy', 1, null, 'SET_AVATAR(\\'boy\\')')">
-                      <rect width="105" height="26" rx="6" fill="#ecfdf5" stroke="#a7f3d0" />
-                      <text x="52" y="17" font-size="10" font-weight="700" fill="#065f46" text-anchor="middle">👦 بطل ولد (عمر)</text>
+                    <g class="diagram-btn-pill" transform="translate(15, 92)" onclick="event.stopPropagation(); triggerButtonFromDiagram('btn-s1-falaq', 1, 2, 'SELECT_ACTIVE_SURAH(\\'al-falaq\\')', 'link-s1-s2')">
+                      <rect width="220" height="26" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5" />
+                      <text x="110" y="17" font-size="10" font-weight="900" fill="#854d0e" text-anchor="middle">🌟 محطة الفلق (عمر يقف هنا) ➔</text>
                     </g>
-                    <g class="diagram-btn-pill" transform="translate(130, 100)" onclick="event.stopPropagation(); triggerButtonFromDiagram('btn-s1-girl', 1, null, 'SET_AVATAR(\\'girl\\')')">
-                      <rect width="105" height="26" rx="6" fill="#ecfdf5" stroke="#a7f3d0" />
-                      <text x="52" y="17" font-size="10" font-weight="700" fill="#065f46" text-anchor="middle">👧 بطلة بنت (مريم)</text>
+                    <g class="diagram-btn-pill" transform="translate(15, 126)" onclick="event.stopPropagation(); triggerButtonFromDiagram('btn-s1-start', 1, 2, 'NAVIGATE_TO(\\'screen_surahs\\')', 'link-s1-s2')">
+                      <rect width="220" height="28" rx="8" fill="#0284c7" />
+                      <text x="110" y="19" font-size="10.5" font-weight="800" fill="#ffffff" text-anchor="middle">🚀 زر: انطلق في مسار السور (CTA)</text>
                     </g>
-                    <g class="diagram-btn-pill" transform="translate(15, 136)" onclick="event.stopPropagation(); triggerButtonFromDiagram('btn-s1-start', 1, 2, 'NAVIGATE_TO(\\'screen_surahs\\')', 'link-s1-s2')">
-                      <rect width="220" height="30" rx="8" fill="#10b981" />
-                      <text x="110" y="20" font-size="11" font-weight="800" fill="#ffffff" text-anchor="middle">🚀 زر: انطلق في مسار السور (CTA)</text>
-                    </g>
-                    <g class="diagram-btn-pill" transform="translate(15, 176)" onclick="event.stopPropagation(); triggerButtonFromDiagram('btn-s1-parent', 1, 4, 'OPEN_PARENT_GATE()', 'link-s1-s4')">
+                    <g class="diagram-btn-pill" transform="translate(15, 162)" onclick="event.stopPropagation(); triggerButtonFromDiagram('btn-s1-parent', 1, 4, 'OPEN_PARENT_GATE()', 'link-s1-s4')">
                       <rect width="220" height="26" rx="6" fill="#fffbeb" stroke="#fde68a" />
-                      <text x="110" y="17" font-size="10" font-weight="700" fill="#b45309" text-anchor="middle">🔒 ترس بوابة الوالدين (Math Gate)</text>
+                      <text x="110" y="17" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">⚙️ ترس إعدادات اللعب وبوابة الأهل 🔒</text>
                     </g>
-                    <text x="125" y="222" font-size="9.5" fill="#64748b" text-anchor="middle">🛡️ صفر مايكروفون (Output Only)</text>
+                    <text x="125" y="204" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">👦 البطل عُمَر | مستكشف صغير (1/30 سورة)</text>
+                    <text x="125" y="222" font-size="9" fill="#0369a1" font-weight="700" text-anchor="middle">🛡️ صفر مايكروفون | Zero-Mic Output Only</text>
                   </g>
 
                   <!-- Screen 2: Surah Selection (Top Middle) -->
@@ -1871,7 +1868,7 @@ def get_html_content():
       <div class="journey-bar">
         <div class="journey-step-node active" id="journeyStep1" onclick="scrollToMockCard('mock-s1')">
           <div class="step-circle">1</div>
-          <div class="step-name">اختيار البطل</div>
+          <div class="step-name">خريطة الطريق</div>
         </div>
         <div class="step-arrow">➔</div>
         <div class="journey-step-node" id="journeyStep2" onclick="scrollToMockCard('mock-s2')">
@@ -1951,7 +1948,7 @@ def get_html_content():
                     <span>🔒🎁 هدية</span>
                   </div>
                   <!-- ACTIVE MILESTONE: Al-Falaq (Omar stands here!) -->
-                  <div style="background: linear-gradient(135deg, #fef08a, #facc15); border: 2px solid #ca8a04; border-radius: 8px; padding: 4px 8px; display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; font-weight: 900; color: #78350f; box-shadow: 0 2px 8px rgba(234,179,8,0.5);" class="animate-pulse">
+                  <div id="mock-s1-falaq-milestone" style="background: linear-gradient(135deg, #fef08a, #facc15); border: 2px solid #ca8a04; border-radius: 8px; padding: 4px 8px; display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; font-weight: 900; color: #78350f; box-shadow: 0 2px 8px rgba(234,179,8,0.5); cursor: pointer;" class="animate-pulse" onclick="navigateToScreenMock(2, 'الانطلاق في سورة الفلق', 'btn-s1-falaq')" title="انقر لبدء سورة الفلق">
                     <span>🌟 سورة الفلق (المحطة الحالية)</span>
                     <span style="font-size: 0.9rem;">👦📖</span>
                   </div>
@@ -2348,41 +2345,41 @@ def get_html_content():
               </tr>
             </thead>
             <tbody>
-              <tr onclick="selectScreenNode(1)">
-                <td><strong>1. الشاشة الرئيسية</strong></td>
-                <td>بطاقة اختيار الولد (عمر)</td>
+              <tr onclick="triggerButtonFromDiagram('btn-s1-falaq', 1, 2, 'SELECT_ACTIVE_SURAH(\\'al-falaq\\')', 'link-s1-s2')">
+                <td><strong>1. خريطة طريق القرآن</strong></td>
+                <td>محطة سورة الفلق (عمر يقف هنا) 🌟</td>
                 <td><span class="meta-tag child">الطفل</span></td>
                 <td>Click</td>
-                <td>تحديث بطل الرحلة لولد فورياً</td>
-                <td><span class="code-badge">SET_AVATAR('boy')</span></td>
-                <td><button class="jump-to-dest-btn" onclick="event.stopPropagation(); selectScreenNode(1)">اعرض بالمخطط</button></td>
-              </tr>
-              <tr onclick="selectScreenNode(1)">
-                <td><strong>1. الشاشة الرئيسية</strong></td>
-                <td>بطاقة اختيار البنت (مريم)</td>
-                <td><span class="meta-tag child">الطفل</span></td>
-                <td>Click</td>
-                <td>تحديث بطل الرحلة لبنت فورياً</td>
-                <td><span class="code-badge">SET_AVATAR('girl')</span></td>
-                <td><button class="jump-to-dest-btn" onclick="event.stopPropagation(); selectScreenNode(1)">اعرض بالمخطط</button></td>
+                <td>2. مسار واختيار السور (بدء السورة)</td>
+                <td><span class="code-badge">SELECT_ACTIVE_SURAH('al-falaq')</span></td>
+                <td><button class="jump-to-dest-btn" onclick="event.stopPropagation(); selectScreenNode(2)">انتقل للسور ➔</button></td>
               </tr>
               <tr onclick="triggerButtonFromDiagram('btn-s1-start', 1, 2, 'NAVIGATE_TO(\\'screen_surahs\\')', 'link-s1-s2')">
-                <td><strong>1. الشاشة الرئيسية</strong></td>
-                <td>زر "انطلق في مسار السور" (CTA)</td>
+                <td><strong>1. خريطة طريق القرآن</strong></td>
+                <td>زر "انطلق في مسار السور" (CTA) 🚀</td>
                 <td><span class="meta-tag child">الطفل</span></td>
                 <td>Click</td>
-                <td>2. شاشة اختيار السورة</td>
+                <td>2. شاشة فهرس واختيار السورة</td>
                 <td><span class="code-badge">NAVIGATE_TO('screen_surahs')</span></td>
                 <td><button class="jump-to-dest-btn" onclick="event.stopPropagation(); selectScreenNode(2)">انتقل للسور ➔</button></td>
               </tr>
               <tr onclick="triggerButtonFromDiagram('btn-s1-parent', 1, 4, 'OPEN_PARENT_GATE()', 'link-s1-s4')">
-                <td><strong>1. الشاشة الرئيسية</strong></td>
-                <td>ترس وقفل بوابة الوالدين (Parent Lock)</td>
+                <td><strong>1. خريطة طريق القرآن</strong></td>
+                <td>ترس إعدادات اللعب وصوت الأهل ⚙️ 🔒</td>
                 <td><span class="meta-tag parent">الوالد</span></td>
                 <td>Click + Math</td>
-                <td>4. نافذة إعدادات الوالدين (Modal)</td>
+                <td>4. نافذة إعدادات اللعب وصوت الأهل (Modal)</td>
                 <td><span class="code-badge">OPEN_PARENT_GATE_MODAL()</span></td>
-                <td><button class="jump-to-dest-btn" onclick="event.stopPropagation(); selectScreenNode(4)">افتح البوابة 🔒</button></td>
+                <td><button class="jump-to-dest-btn" onclick="event.stopPropagation(); selectScreenNode(4)">افتح الإعدادات 🔒</button></td>
+              </tr>
+              <tr onclick="selectScreenNode(1)">
+                <td><strong>1. خريطة طريق القرآن</strong></td>
+                <td>شريط البطل ولافتة "كل يوم آية جديدة" ❤️</td>
+                <td><span class="meta-tag child">الطفل</span></td>
+                <td>Tap</td>
+                <td>تحديث هوية البطل ورتبته (مستكشف صغير)</td>
+                <td><span class="code-badge">UPDATE_HERO_PROGRESS()</span></td>
+                <td><button class="jump-to-dest-btn" onclick="event.stopPropagation(); selectScreenNode(1)">اعرض بالخريطة</button></td>
               </tr>
               <tr onclick="triggerButtonFromDiagram('btn-s2-card', 2, 3, 'SELECT_SURAH(id)', 'link-s2-s3')">
                 <td><strong>2. اختيار السورة</strong></td>
@@ -2594,7 +2591,7 @@ def get_html_content():
         <!-- Tabbed selection for each screen -->
         <div class="stitch-tabs-row">
           <button class="stitch-tab-btn active" onclick="switchStitchTab(0, this)">التوجيه العام (Design System)</button>
-          <button class="stitch-tab-btn" onclick="switchStitchTab(1, this)">شاشة 1: البطل والاسم</button>
+          <button class="stitch-tab-btn" onclick="switchStitchTab(1, this)">شاشة 1: خريطة طريق الحديقة</button>
           <button class="stitch-tab-btn" onclick="switchStitchTab(2, this)">شاشة 2: اختيار السورة</button>
           <button class="stitch-tab-btn" onclick="switchStitchTab(3, this)">شاشة 3: الهدية المرتقبة</button>
           <button class="stitch-tab-btn" onclick="switchStitchTab(4, this)">شاشة 4: بوابة الوالدين</button>
@@ -2692,50 +2689,51 @@ Typography: Authentic Quranic Amiri for Quranic verses, Cairo / Tajawal for UI w
     const SCREENS_DATA = {
       1: {
         id: 1,
-        title: "الشاشة الرئيسية: اختيار البطل والاسم",
-        code: "Screen_Onboarding_Hero",
+        title: "1. خريطة طريق حفظ القرآن (مسار الحديقة الصاعد)",
+        code: "Screen_Winding_Garden_Roadmap",
         persona: "الطفل (3-5 سنوات) بمصاحبة الوالد",
-        badge: "شاشة 1: البداية والتخصيص",
-        purpose: "الترحيب بالطفل وإشعاره بالفخر والشخصنة من خلال اختيار جنس البطل (عمر أو مريم) واسمه في بيئة بصرية دافئة ومبهجة.",
-        micStatus: "🛡️ صفر مايكروفون (لا يطلب أي أذونات نهائياً)",
+        badge: "شاشة 1: خريطة طريق الحديقة",
+        purpose: "المسار الحركي الصاعد في حديقة مشمسة مبهجة؛ يقف البطل عمر على محطة سورة الفلق (المحطة النشطة الحالية)، بين مسجد القبة الخضراء والشجرة الظليلة ولافتة 'كل يوم آية جديدة'، مع إمكانية الانطلاق المباشر لمسار السور أو إعدادات الوالد.",
+        micStatus: "🛡️ صفر مايكروفون (Zero-Mic Output Only)",
         buttons: [
           {
-            id: "btn-s1-boy",
-            name: "بطاقة البطل الولد (عمر)",
-            type: "نقر اختيار",
-            dest: "تحديث الأفاتار فورياً",
-            action: "SET_AVATAR('boy')",
-            desc: "تغيير المظهر الكرتوني لبطل ولد مبتسم يرتدي زياً إسلامياً مريحاً.",
-            linkId: null
-          },
-          {
-            id: "btn-s1-girl",
-            name: "بطاقة البطلة البنت (مريم)",
-            type: "نقر اختيار",
-            dest: "تحديث الأفاتار فورياً",
-            action: "SET_AVATAR('girl')",
-            desc: "تغيير المظهر لبطلة كرتونية مبتسمة بملابس لطيفة.",
-            linkId: null
+            id: "btn-s1-falaq",
+            name: "محطة سورة الفلق (عمر يقف هنا) 🌟",
+            type: "محطة طريق صاعدة تفاعلية",
+            dest: "2. مسار واختيار السور (بدء السورة)",
+            action: "SELECT_ACTIVE_SURAH('al-falaq')",
+            desc: "نقر المحطة الحالية النشطة التي يقف عندها عمر للانطلاق في مسار السورة وحفظها.",
+            linkId: "link-s1-s2",
+            targetScreen: 2
           },
           {
             id: "btn-s1-start",
-            name: "زر انطلق في مسار السور (CTA)",
+            name: "زر انطلق في مسار السور 🚀 (CTA)",
             type: "زر رئيسي عريض",
-            dest: "2. شاشة اختيار السورة",
+            dest: "2. شاشة فهرس السور الـ 37",
             action: "NAVIGATE_TO('screen_surahs')",
-            desc: "الانتقال المباشر لخريطة سور جزء عم الـ 37 مع حفظ بيانات الطفل المختارة.",
+            desc: "الانتقال المباشر لخريطة سور جزء عم الـ 37 لاستعراض اللآلئ والنجوم.",
             linkId: "link-s1-s2",
             targetScreen: 2
           },
           {
             id: "btn-s1-parent",
-            name: "ترس بوابة الوالدين الهادئ 🔒",
+            name: "ترس إعدادات اللعب وصوت الأهل ⚙️ 🔒",
             type: "أيقونة بالزاوية العلوية",
-            dest: "4. نافذة إعدادات الوالدين",
+            dest: "4. نافذة إعدادات اللعب وصوت الأهل",
             action: "OPEN_PARENT_GATE_MODAL()",
-            desc: "طلب حل مسألة الأمان الحسابية لفتح نافذة التكرارات والتحكم الصوتي.",
+            desc: "طلب حل مسألة الأمان الحسابية لفتح نافذة التكرارات وتسجيل صوت الأب التشجيعي الحقيقي.",
             linkId: "link-s1-s4",
             targetScreen: 4
+          },
+          {
+            id: "btn-s1-hero",
+            name: "بروفايل البطل ولافتة 'كل يوم آية جديدة' ❤️",
+            type: "عنصر تشجيعي وتعريف بالبطل",
+            dest: "تحديث شريط البطل والتقدم",
+            action: "SET_AVATAR('boy')",
+            desc: "عرض رتبة الطفل (مستكشف صغير: 1/30) وتشجيعه اليومي باللافتة الخشبية.",
+            linkId: null
           }
         ]
       },
