@@ -238,6 +238,7 @@ def test_math_gate_dynamic_generation_and_guard(html_content: str = None, js_cod
         "expectedMathAnswer",
         "generateMathChallenge"
     ])
+    has_math_gate_lock = "isMathGateUnlocked" in js_code or "setParentSettingsLockState" in js_code
 
     if strict:
         assert not has_static_math, (
@@ -248,7 +249,11 @@ def test_math_gate_dynamic_generation_and_guard(html_content: str = None, js_cod
             "ECC VIOLATION [LOG-05]: Missing dynamic Math Gate generation and verification logic in JavaScript! "
             "Parent settings access must be dynamically guarded."
         )
-        print("  ✓ Strict Audit: Math Gate is fully dynamic and verified in JavaScript.")
+        assert has_math_gate_lock, (
+            "ECC VIOLATION [LOG-05]: Math Gate lacks active security lock state ('isMathGateUnlocked')! "
+            "Settings must be locked against toddler tampering until the challenge is solved."
+        )
+        print("  ✓ Strict Audit: Math Gate is fully dynamic, actively locked, and verified in JavaScript.")
     else:
         if has_static_math or not has_dynamic_math_js:
             print("  ⚠️ [DEFECT LOG-05 DETECTED]: Math Gate challenge is currently rendered as static text ('8 + 5 = 13') without dynamic JS verification.")
@@ -607,6 +612,21 @@ setRepetitions(4, new MockElement());
 toggleAutoPlay();
 triggerToyPlayAnimation();
 restartSurah();
+
+// Test Parent Settings & Dynamic Math Gate security lifecycle
+openParentSettings(1);
+generateMathGateChallenge();
+const badAnsPassed = verifyMathGateAndProceed(99999);
+if (badAnsPassed !== false) throw new Error('Math Gate accepted invalid answer!');
+const goodAnsPassed = verifyMathGateAndProceed(expectedMathAnswer);
+if (goodAnsPassed !== true) throw new Error('Math Gate rejected valid answer!');
+closeParentSettings();
+
+openParentSettings(2);
+const goodAnsPassed2 = verifyMathGateAndProceed(expectedMathAnswer);
+if (goodAnsPassed2 !== true) throw new Error('Math Gate rejected valid answer on Screen 2 source!');
+closeParentSettings();
+
 console.log('[SUCCESS] All interactive simulator functions executed with 0 exceptions!');
 """)
 

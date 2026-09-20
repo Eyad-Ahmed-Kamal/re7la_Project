@@ -2121,45 +2121,7 @@ def get_html_content():
                 <button class="mock-btn subtle" style="padding: 2px 8px; font-size: 0.75rem;" onclick="closeParentSettings()">✕</button>
               </div>
 
-              <!-- Child Avatar & Photo Upload (IndexedDB) -->
-              <div style="background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: var(--radius-md); padding: 7px 9px; margin-bottom: 8px;">
-                <div style="font-size: 0.7rem; color: #047857; font-weight: 800; margin-bottom: 4px;">أفاتار الطفل وصورة الوجه (محلياً 100%):</div>
-                <div style="display: flex; gap: 4px;">
-                  <button class="mock-btn" style="flex: 1; padding: 4px; font-size: 0.7rem; background: #059669;" onclick="setPhoneHero('boy')">👦 عمر</button>
-                  <button class="mock-btn subtle" style="flex: 1; padding: 4px; font-size: 0.7rem;" onclick="setPhoneHero('girl')">👧 مريم</button>
-                  <button class="mock-btn subtle" style="flex: 1.2; padding: 4px; font-size: 0.68rem; background: #ecfdf5; color: #047857; border: 1px dashed #10b981;" onclick="showToast('📸 صورة الطفل تُدمج على الأفاتار وتُحفظ في IndexedDB')">📸 صورة الطفل</button>
-                </div>
-              </div>
-
-              <!-- Parent Voice Recording (IndexedDB) -->
-              <div style="background: #fefce8; border: 1.5px solid #fde047; border-radius: var(--radius-md); padding: 7px 9px; margin-bottom: 8px;">
-                <div style="font-size: 0.7rem; color: #854d0e; font-weight: 800; margin-bottom: 4px;">صوت تشجيع الأب الحقيقي (IndexedDB):</div>
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
-                  <button class="mock-btn" style="background: #e11d48; padding: 4px 8px; font-size: 0.68rem;" onclick="playTone(440, 0.2, 'sine', 0.2); showToast('🎙️ جاري تسجيل صوت الأب... تم الحفظ في IndexedDB')">🎙️ سجّل صوتك</button>
-                  <span style="font-size: 0.65rem; color: #78350f; font-weight: 700;">"عاش يا بطل يا عمر!"</span>
-                  <button class="mock-btn subtle" style="padding: 2px 6px; font-size: 0.65rem;" onclick="playChime('chime'); showToast('🔊 تشغيل صوت الأب المسجل')">▶️ استمع</button>
-                </div>
-              </div>
-
-              <!-- Verse Repetitions [1..5] -->
-              <div style="margin-bottom: 8px;">
-                <div style="font-size: 0.7rem; color: #334155; font-weight: 800; margin-bottom: 4px;">تكرار الآية للطفل:</div>
-                <div style="display: flex; justify-content: space-between; gap: 4px;">
-                  <div class="repetition-circle-btn" onclick="setRepetitions(1, this)">1</div>
-                  <div class="repetition-circle-btn" onclick="setRepetitions(2, this)">2</div>
-                  <div class="repetition-circle-btn active" onclick="setRepetitions(3, this)">3</div>
-                  <div class="repetition-circle-btn" onclick="setRepetitions(4, this)">4</div>
-                  <div class="repetition-circle-btn" onclick="setRepetitions(5, this)">5</div>
-                </div>
-              </div>
-
-              <!-- Auto-play Toggle -->
-              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 6px 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; cursor: pointer;" onclick="toggleAutoPlay()">
-                <span style="font-size: 0.7rem; color: #1e293b; font-weight: 700;">تشغيل تلقائي للآيات بدون لمس:</span>
-                <span id="autoPlayStatusText" style="color: #10b981; font-weight: 900; font-size: 0.75rem;">مُفَعَّل ✓</span>
-              </div>
-
-              <!-- Dynamic Math Challenge (Security) -->
+              <!-- Dynamic Math Challenge (Security Gate at Top) -->
               <div id="mathGateBox" style="background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); padding: 6px 8px; margin-bottom: 8px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                   <span style="font-size: 0.68rem; color: #475569; font-weight: 700;">🔒 مسألة أمان الوالد (Math Gate):</span>
@@ -2171,6 +2133,48 @@ def get_html_content():
                   <button class="mock-btn subtle" style="padding: 3px 6px; font-size: 0.68rem;" onclick="generateMathGateChallenge()" title="مسألة جديدة">🔄</button>
                 </div>
                 <div id="mathGateFeedback" style="font-size: 0.65rem; color: #059669; font-weight: 700; margin-top: 3px; display: none;">✓ تم التحقق بنجاح</div>
+                <div id="mathGateLockNotice" style="font-size: 0.62rem; color: #b45309; font-weight: 700; margin-top: 2px;">🔒 يُرجى حل المسألة لفتح خيارات التعديل أدناه</div>
+              </div>
+
+              <!-- Gated Settings Controls -->
+              <div id="parentSettingsControls" style="opacity: 0.55; pointer-events: none; transition: opacity 0.3s ease;">
+                <!-- Child Avatar & Photo Upload (IndexedDB) -->
+                <div style="background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: var(--radius-md); padding: 7px 9px; margin-bottom: 8px;">
+                  <div style="font-size: 0.7rem; color: #047857; font-weight: 800; margin-bottom: 4px;">أفاتار الطفل وصورة الوجه (محلياً 100%):</div>
+                  <div style="display: flex; gap: 4px;">
+                    <button class="mock-btn" style="flex: 1; padding: 4px; font-size: 0.7rem; background: #059669;" onclick="setPhoneHero('boy')">👦 عمر</button>
+                    <button class="mock-btn subtle" style="flex: 1; padding: 4px; font-size: 0.7rem;" onclick="setPhoneHero('girl')">👧 مريم</button>
+                    <button class="mock-btn subtle" style="flex: 1.2; padding: 4px; font-size: 0.68rem; background: #ecfdf5; color: #047857; border: 1px dashed #10b981;" onclick="showToast('📸 صورة الطفل تُدمج على الأفاتار وتُحفظ في IndexedDB')">📸 صورة الطفل</button>
+                  </div>
+                </div>
+
+                <!-- Parent Voice Recording (IndexedDB) -->
+                <div style="background: #fefce8; border: 1.5px solid #fde047; border-radius: var(--radius-md); padding: 7px 9px; margin-bottom: 8px;">
+                  <div style="font-size: 0.7rem; color: #854d0e; font-weight: 800; margin-bottom: 4px;">صوت تشجيع الأب الحقيقي (IndexedDB):</div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                    <button class="mock-btn" style="background: #e11d48; padding: 4px 8px; font-size: 0.68rem;" onclick="playTone(440, 0.2, 'sine', 0.2); showToast('🎙️ جاري تسجيل صوت الأب... تم الحفظ في IndexedDB')">🎙️ سجّل صوتك</button>
+                    <span style="font-size: 0.65rem; color: #78350f; font-weight: 700;">\"عاش يا بطل يا عمر!\"</span>
+                    <button class="mock-btn subtle" style="padding: 2px 6px; font-size: 0.65rem;" onclick="playChime('chime'); showToast('🔊 تشغيل صوت الأب المسجل')">▶️ استمع</button>
+                  </div>
+                </div>
+
+                <!-- Verse Repetitions [1..5] -->
+                <div style="margin-bottom: 8px;">
+                  <div style="font-size: 0.7rem; color: #334155; font-weight: 800; margin-bottom: 4px;">تكرار الآية للطفل:</div>
+                  <div style="display: flex; justify-content: space-between; gap: 4px;">
+                    <div class="repetition-circle-btn" onclick="setRepetitions(1, this)">1</div>
+                    <div class="repetition-circle-btn" onclick="setRepetitions(2, this)">2</div>
+                    <div class="repetition-circle-btn active" onclick="setRepetitions(3, this)">3</div>
+                    <div class="repetition-circle-btn" onclick="setRepetitions(4, this)">4</div>
+                    <div class="repetition-circle-btn" onclick="setRepetitions(5, this)">5</div>
+                  </div>
+                </div>
+
+                <!-- Auto-play Toggle -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 6px 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; cursor: pointer;" onclick="toggleAutoPlay()">
+                  <span style="font-size: 0.7rem; color: #1e293b; font-weight: 700;">تشغيل تلقائي للآيات بدون لمس:</span>
+                  <span id="autoPlayStatusText" style="color: #10b981; font-weight: 900; font-size: 0.75rem;">مُفَعَّل ✓</span>
+                </div>
               </div>
 
               <!-- Save CTA -->
@@ -2468,7 +2472,7 @@ def get_html_content():
                 <td>Click</td>
                 <td>العودة للشاشة السابقة (الرئيسية 1 أو السور 2)</td>
                 <td><span class="code-badge">CLOSE_PARENT_GATE()</span></td>
-                <td><button class="jump-to-dest-btn" onclick="event.stopPropagation(); selectScreenNode(2)">إغلاق وعودة ↩</button></td>
+                <td><button class="jump-to-dest-btn" onclick="event.stopPropagation(); selectScreenNode(parentModalSourceScreen)">إغلاق وعودة ↩</button></td>
               </tr>
               <tr onclick="triggerButtonFromDiagram('btn-s5-tap', 5, null, 'AUDIO_TOGGLE_OR_REPEAT()')">
                 <td><strong>5. الترديد النشط</strong></td>
@@ -3491,6 +3495,23 @@ Actions:
       }
     }
 
+    // Dynamic Parent Math Gate Security (LOG-05)
+    let expectedMathAnswer = null;
+    let isMathGateUnlocked = false;
+
+    function setParentSettingsLockState(isUnlocked) {
+      isMathGateUnlocked = isUnlocked;
+      const controlsEl = document.getElementById('parentSettingsControls');
+      if (controlsEl) {
+        controlsEl.style.opacity = isUnlocked ? '1' : '0.55';
+        controlsEl.style.pointerEvents = isUnlocked ? 'auto' : 'none';
+      }
+      const lockNoticeEl = document.getElementById('mathGateLockNotice');
+      if (lockNoticeEl) {
+        lockNoticeEl.style.display = isUnlocked ? 'none' : 'block';
+      }
+    }
+
     function openParentSettings(sourceScreenId) {
       parentModalSourceScreen = (sourceScreenId === 1 || sourceScreenId === 2) ? sourceScreenId : 1;
       const linkId = (parentModalSourceScreen === 1) ? 'link-s1-s4' : 'link-s2-s4';
@@ -3500,19 +3521,29 @@ Actions:
     }
 
     function closeParentSettings() {
+      if (!isMathGateUnlocked) {
+        playChime('click');
+        showToast('🔒 يُرجى حل مسألة الأمان الحسابية أولاً لحفظ التعديلات!');
+        const feedbackEl = document.getElementById('mathGateFeedback');
+        if (feedbackEl) {
+          feedbackEl.textContent = '🔒 المسألة مطلوبة لحفظ التعديلات';
+          feedbackEl.style.color = '#dc2626';
+          feedbackEl.style.display = 'block';
+        }
+        return;
+      }
       const targetScreen = parentModalSourceScreen;
       const linkId = (targetScreen === 1) ? 'link-s4-s1' : 'link-s4-s2';
       highlightLinkInDiagram(linkId);
+      setParentSettingsLockState(false);
       navigateToScreenMock(targetScreen, 'حفظ الإعدادات والعودة للشاشة السابقة', 'btn-s4-close');
     }
-
-    // Dynamic Parent Math Gate Security (LOG-05)
-    let expectedMathAnswer = null;
 
     function generateMathGateChallenge() {
       const num1 = Math.floor(Math.random() * 8) + 6; // 6 to 13
       const num2 = Math.floor(Math.random() * 7) + 4; // 4 to 10
       expectedMathAnswer = num1 + num2;
+      setParentSettingsLockState(false);
 
       const questionEl = document.getElementById('math-gate-question');
       if (questionEl) {
@@ -3525,12 +3556,14 @@ Actions:
     }
 
     function verifyMathGateAndProceed(userAnswer, sourceScreenId) {
-      const ans = parseInt(userAnswer, 10);
-      if (ans === expectedMathAnswer) {
+      const cleanInput = userAnswer !== null && userAnswer !== undefined ? String(userAnswer).trim() : '';
+      const ans = Number(cleanInput);
+      if (cleanInput !== '' && !isNaN(ans) && ans === expectedMathAnswer) {
         playChime('celebrate');
+        setParentSettingsLockState(true);
         const feedbackEl = document.getElementById('mathGateFeedback');
         if (feedbackEl) {
-          feedbackEl.textContent = '✓ تم التحقق بنجاح';
+          feedbackEl.textContent = '✓ تم التحقق بنجاح - تم فتح الإعدادات';
           feedbackEl.style.color = '#059669';
           feedbackEl.style.display = 'block';
         }
@@ -3541,6 +3574,7 @@ Actions:
         return true;
       } else {
         playChime('click');
+        setParentSettingsLockState(false);
         const feedbackEl = document.getElementById('mathGateFeedback');
         if (feedbackEl) {
           feedbackEl.textContent = '⚠️ إجابة غير صحيحة، تم توليد مسألة جديدة';
@@ -3757,6 +3791,10 @@ Actions:
     }
 
     function simulateParentInvisibleTap() {
+      if (isVerseTransitionLocked) {
+        console.warn("Tap ignored: Verse transition cooldown active.");
+        return;
+      }
       playChime('click');
       isSheikhTurn = !isSheikhTurn;
 
