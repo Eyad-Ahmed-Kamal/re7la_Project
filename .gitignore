@@ -1,2 +1,4 @@
 # Local ECC Agents & Skills
 .agents/
+__pycache__/
+*.pyc

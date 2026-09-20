@@ -1663,7 +1663,7 @@
                       <rect width="220" height="26" rx="6" fill="#fffbeb" stroke="#fde68a" />
                       <text x="110" y="17" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">⚙️ ترس إعدادات اللعب وبوابة الأهل 🔒</text>
                     </g>
-                    <text x="125" y="204" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">👦 البطل عُمَر | مستكشف صغير (1/30 سورة)</text>
+                    <text x="125" y="204" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">👦 البطل عُمَر | مستكشف صغير (1/37 سورة)</text>
                     <text x="125" y="222" font-size="9" fill="#0369a1" font-weight="700" text-anchor="middle">🛡️ صفر مايكروفون | Zero-Mic Output Only</text>
                   </g>
 
@@ -1788,7 +1788,7 @@
                     <!-- Button / Controls Pills on Screen 4 -->
                     <g class="diagram-btn-pill" transform="translate(15, 96)" onclick="event.stopPropagation(); triggerButtonFromDiagram('btn-s4-math', 4, null, 'VERIFY_CHALLENGE()')">
                       <rect width="230" height="24" rx="6" fill="#fffbeb" stroke="#fde68a" />
-                      <text x="115" y="16" font-size="9.5" font-weight="800" fill="#92400e" text-anchor="middle">🔢 مسألة الأمان للوالدين (8 + 5 = 13)</text>
+                      <text x="115" y="16" font-size="9.5" font-weight="800" fill="#92400e" text-anchor="middle">🔢 مسألة أمان الوالد التفاعلية (Math Gate)</text>
                     </g>
                     <g class="diagram-btn-pill" transform="translate(15, 126)" onclick="event.stopPropagation(); triggerButtonFromDiagram('btn-s4-repeat', 4, null, 'SET_REPETITIONS(n)')">
                       <rect width="110" height="24" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
@@ -1884,9 +1884,9 @@
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <div style="display: flex; align-items: center; gap: 6px;">
                   <span style="font-weight: 900; color: #0284c7; font-size: 1.05rem;">رِحْلة ⭐</span>
-                  <span style="background: #e0f2fe; color: #0369a1; font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 10px;">جزء عم: 1/30</span>
+                  <span style="background: #e0f2fe; color: #0369a1; font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 10px;">جزء عم: 1/37 سورة</span>
                 </div>
-                <button class="mock-btn subtle" style="padding: 3px 8px; font-size: 0.75rem;" onclick="navigateToScreenMock(4, 'فتح إعدادات اللعب وصوت الأهل', 'btn-s1-parent')" title="بوابة الوالدين">⚙️ 🔒</button>
+                <button class="mock-btn subtle" style="padding: 3px 8px; font-size: 0.75rem;" onclick="openParentSettings(1)" title="بوابة الوالدين">⚙️ 🔒</button>
               </div>
 
               <!-- Hero Rank Chip -->
@@ -1962,7 +1962,7 @@
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <button class="mock-btn subtle" style="padding: 2px 8px; font-size: 0.75rem;" onclick="navigateToScreenMock(1, 'العودة لخريطة الطريق', 'btn-s2-back')">🔙</button>
                 <span style="font-weight: 800; font-size: 0.88rem; color: #0f172a;">مسار السور الذهبي 📖</span>
-                <button class="mock-btn subtle" style="padding: 2px 8px; font-size: 0.75rem;" onclick="navigateToScreenMock(4, 'فتح إعدادات الوالد', 'btn-s2-parent')">⚙️</button>
+                <button class="mock-btn subtle" style="padding: 2px 8px; font-size: 0.75rem;" onclick="openParentSettings(2)" title="إعدادات الوالد">⚙️</button>
               </div>
 
               <!-- Star Counter & Rank -->
@@ -2087,7 +2087,7 @@
 
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <span style="font-weight: 900; font-size: 0.88rem; color: #b45309;">إعدادات اللعب وصوت الأهل ⚙️</span>
-                <button class="mock-btn subtle" style="padding: 2px 8px; font-size: 0.75rem;" onclick="navigateToScreenMock(2, 'إغلاق نافذة الإعدادات والعودة', 'btn-s4-close')">✕</button>
+                <button class="mock-btn subtle" style="padding: 2px 8px; font-size: 0.75rem;" onclick="closeParentSettings()">✕</button>
               </div>
 
               <!-- Child Avatar & Photo Upload (IndexedDB) -->
@@ -2128,15 +2128,23 @@
                 <span id="autoPlayStatusText" style="color: #10b981; font-weight: 900; font-size: 0.75rem;">مُفَعَّل ✓</span>
               </div>
 
-              <!-- Math Challenge (Security) -->
-              <div style="background: #f1f5f9; border-radius: var(--radius-sm); padding: 5px 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 0.68rem; color: #64748b;">مسألة أمان الوالد: 8 + 5 = </span>
-                <span style="font-weight: 900; color: #059669; font-size: 0.75rem;">13 ✓ تم التحقق</span>
+              <!-- Dynamic Math Challenge (Security) -->
+              <div id="mathGateBox" style="background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); padding: 6px 8px; margin-bottom: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-size: 0.68rem; color: #475569; font-weight: 700;">🔒 مسألة أمان الوالد (Math Gate):</span>
+                  <span id="math-gate-question" style="font-family: monospace; font-size: 0.8rem; font-weight: 900; color: #0f172a; background: #e2e8f0; padding: 2px 6px; border-radius: 4px;">9 + 6 = ?</span>
+                </div>
+                <div style="display: flex; gap: 4px; align-items: center;">
+                  <input type="number" id="mathGateInput" placeholder="الناتج" style="width: 55px; padding: 3px 5px; font-size: 0.75rem; border: 1px solid #94a3b8; border-radius: 4px; text-align: center;" onkeydown="if(event.key==='Enter') verifyMathGateAndProceed(this.value)">
+                  <button class="mock-btn" style="flex: 1; padding: 3px 6px; font-size: 0.68rem; background: #059669;" onclick="verifyMathGateAndProceed(document.getElementById('mathGateInput').value)">تحقق ودخول ✓</button>
+                  <button class="mock-btn subtle" style="padding: 3px 6px; font-size: 0.68rem;" onclick="generateMathGateChallenge()" title="مسألة جديدة">🔄</button>
+                </div>
+                <div id="mathGateFeedback" style="font-size: 0.65rem; color: #059669; font-weight: 700; margin-top: 3px; display: none;">✓ تم التحقق بنجاح</div>
               </div>
 
               <!-- Save CTA -->
               <div style="margin-top: auto; padding-bottom: 4px;">
-                <button class="mock-btn" style="width: 100%; padding: 10px; background: #ca8a04; font-size: 0.85rem; font-weight: 900;" onclick="navigateToScreenMock(2, 'حفظ الإعدادات في الهاتف والعودة', 'btn-s4-close')">
+                <button class="mock-btn" style="width: 100%; padding: 10px; background: #ca8a04; font-size: 0.85rem; font-weight: 900;" onclick="closeParentSettings()">
                   حفظ التعديلات وإغلاق ✓
                 </button>
               </div>
@@ -2689,7 +2697,7 @@ Typography: Authentic Quranic Amiri for Quranic verses, Cairo / Tajawal for UI w
             type: "عنصر تشجيعي وتعريف بالبطل",
             dest: "تحديث شريط البطل والتقدم",
             action: "SET_AVATAR('boy')",
-            desc: "عرض رتبة الطفل (مستكشف صغير: 1/30) وتشجيعه اليومي باللافتة الخشبية.",
+            desc: "عرض رتبة الطفل (مستكشف صغير: 1/37) وتشجيعه اليومي باللافتة الخشبية.",
             linkId: null
           }
         ]
@@ -2965,7 +2973,7 @@ Landscape Elements:
   * Milestone 4: Surah Al-Masad (Locked stop 🔒).
 - Wooden Signboard at Bottom: Cute rustic sign carved: "كل يوم آية جديدة ❤️".
 Header HUD:
-- Top Right: "رِحْلة ⭐" logo with rank "مستكشف صغير" and "جزء عم: 1/30".
+- Top Right: "رِحْلة ⭐" logo with rank "مستكشف صغير" and "جزء عم: 1/37".
 - Top Left: Parental settings gear ⚙️ 🔒.
 Primary Action:
 - Emerald/Sky Blue wide pill button: "انطلق في مسار السور 🚀" with gentle pulsing glow.
@@ -3005,7 +3013,7 @@ Primary CTA:
 Platform: Mobile Floating Modal (Overlaid on sunny garden backdrop)
 Visual: Soft white cloud card (#ffffff) with Omar the hero sitting cutely on the top edge.
 Parental Security Gate:
-- Random math question: "8 + 5 = [ 13 ] ✓" to prevent toddler accidental tampering.
+- Dynamic random math challenge: generateMathGateChallenge() generates dynamic arithmetic (e.g. 9 + 6 = ?) to prevent toddler accidental tampering.
 Settings Controls:
 1. Child Avatar & Photo: Choice of boy (Omar), girl (Maryam), or (+) upload child's real face photo blended on canvas and stored in IndexedDB.
 2. Parent's Voice Recorder: Microphone button for parent to record their real encouragement voice ("عاش يا بطل يا عمر! أنا فخور بيك يا حبيبي") saved as Blob in IndexedDB.
@@ -3071,6 +3079,7 @@ Actions:
       initPanZoomEngine();
       renderInspector(1);
       updateStitchPromptDisplay();
+      generateMathGateChallenge();
     });
 
     // ==========================================
@@ -3258,6 +3267,14 @@ Actions:
     // Trigger button from either SVG diagram or inspector
     function triggerButtonFromDiagram(btnId, sourceScreen, targetScreen, actionCode, linkId) {
       playChime('click');
+      if (btnId === 'btn-s4-close') {
+        targetScreen = parentModalSourceScreen;
+        linkId = (parentModalSourceScreen === 1) ? 'link-s4-s1' : 'link-s4-s2';
+      } else if (btnId === 'btn-s1-parent') {
+        parentModalSourceScreen = 1;
+      } else if (btnId === 'btn-s2-parent') {
+        parentModalSourceScreen = 2;
+      }
       currentSelectedScreen = sourceScreen;
 
       // Select source screen node
@@ -3420,6 +3437,79 @@ Actions:
     // ==========================================
     // 5. WIREFRAME SIMULATOR NAVIGATION
     // ==========================================
+    // Dynamic Parent Navigation & Return Memory (WFK-01)
+    let parentModalSourceScreen = 1; // Default to Screen 1
+
+    function highlightLinkInDiagram(linkId) {
+      document.querySelectorAll(".link-path").forEach(p => p.classList.remove("active-link"));
+      if (linkId) {
+        const linkEl = document.getElementById(linkId);
+        if (linkEl) linkEl.classList.add("active-link");
+      }
+    }
+
+    function openParentSettings(sourceScreenId) {
+      parentModalSourceScreen = (sourceScreenId === 1 || sourceScreenId === 2) ? sourceScreenId : 1;
+      const linkId = (parentModalSourceScreen === 1) ? 'link-s1-s4' : 'link-s2-s4';
+      highlightLinkInDiagram(linkId);
+      generateMathGateChallenge();
+      navigateToScreenMock(4, 'فتح إعدادات الوالدين بأمان', 'btn-s' + parentModalSourceScreen + '-parent');
+    }
+
+    function closeParentSettings() {
+      const targetScreen = parentModalSourceScreen;
+      const linkId = (targetScreen === 1) ? 'link-s4-s1' : 'link-s4-s2';
+      highlightLinkInDiagram(linkId);
+      navigateToScreenMock(targetScreen, 'حفظ الإعدادات والعودة للشاشة السابقة', 'btn-s4-close');
+    }
+
+    // Dynamic Parent Math Gate Security (LOG-05)
+    let expectedMathAnswer = null;
+
+    function generateMathGateChallenge() {
+      const num1 = Math.floor(Math.random() * 8) + 6; // 6 to 13
+      const num2 = Math.floor(Math.random() * 7) + 4; // 4 to 10
+      expectedMathAnswer = num1 + num2;
+
+      const questionEl = document.getElementById('math-gate-question');
+      if (questionEl) {
+        questionEl.textContent = `${num1} + ${num2} = ?`;
+      }
+      const inputEl = document.getElementById('mathGateInput');
+      if (inputEl) inputEl.value = '';
+      const feedbackEl = document.getElementById('mathGateFeedback');
+      if (feedbackEl) feedbackEl.style.display = 'none';
+    }
+
+    function verifyMathGateAndProceed(userAnswer, sourceScreenId) {
+      const ans = parseInt(userAnswer, 10);
+      if (ans === expectedMathAnswer) {
+        playChime('celebrate');
+        const feedbackEl = document.getElementById('mathGateFeedback');
+        if (feedbackEl) {
+          feedbackEl.textContent = '✓ تم التحقق بنجاح';
+          feedbackEl.style.color = '#059669';
+          feedbackEl.style.display = 'block';
+        }
+        showToast('🔓 تم التحقق من أمان الوالد بنجاح!');
+        if (sourceScreenId) {
+          openParentSettings(sourceScreenId);
+        }
+        return true;
+      } else {
+        playChime('click');
+        const feedbackEl = document.getElementById('mathGateFeedback');
+        if (feedbackEl) {
+          feedbackEl.textContent = '⚠️ إجابة غير صحيحة، تم توليد مسألة جديدة';
+          feedbackEl.style.color = '#dc2626';
+          feedbackEl.style.display = 'block';
+        }
+        showToast('⚠️ إجابة غير صحيحة، تم توليد مسألة جديدة للأمان');
+        generateMathGateChallenge();
+        return false;
+      }
+    }
+
     function scrollToMockCard(cardId) {
       switchView('wireframes-view', document.querySelectorAll(".nav-tab-btn")[1]);
       const card = document.getElementById(cardId);
@@ -3492,7 +3582,10 @@ Actions:
     let isSheikhTurn = true;
     let currentVerseNumber = 1;
     let currentRepetitions = 3;
+    let currentVerseRepeatCount = 0;
     let isAutoPlayEnabled = true;
+    let isVerseTransitionLocked = false;
+    const VERSE_ADVANCE_COOLDOWN_MS = 800;
 
     function selectToyCategory(cat, btnEl) {
       playChime('click');
@@ -3527,6 +3620,7 @@ Actions:
     function setRepetitions(n, el) {
       playChime('click');
       currentRepetitions = n;
+      currentVerseRepeatCount = 0;
       document.querySelectorAll(".repetition-circle-btn").forEach(c => c.classList.remove("active"));
       if (el) el.classList.add("active");
       showToast(`🔁 تم ضبط تكرار الآية إلى ${n} مرات`);
@@ -3597,15 +3691,26 @@ Actions:
     }
 
     function advanceToNextVerse() {
+      if (isVerseTransitionLocked) {
+        console.warn("Tap ignored: Verse transition cooldown active.");
+        return;
+      }
+      isVerseTransitionLocked = true;
       playChime('click');
+
       if (currentVerseNumber >= 5) {
         simulateSurahCompletion();
       } else {
         currentVerseNumber++;
         isSheikhTurn = true;
+        currentVerseRepeatCount = 0;
         updateVerseDisplay(currentVerseNumber);
         showToast(`⏭️ الانتقال للآية ${currentVerseNumber} من سورة الفلق`);
       }
+
+      setTimeout(() => {
+        isVerseTransitionLocked = false;
+      }, VERSE_ADVANCE_COOLDOWN_MS);
     }
 
     function simulateParentInvisibleTap() {
@@ -3624,33 +3729,35 @@ Actions:
           avatar.style.transform = "scale(1.15)";
         }
         if (badge) {
-          badge.innerHTML = "✨ دورك يا عمر! ردد الآية لبابا وماما في الغرفة";
+          badge.innerHTML = `✨ دورك يا عمر! ردد الآية لبابا وماما في الغرفة (ترديد ${currentVerseRepeatCount + 1} من ${currentRepetitions})`;
           badge.style.color = "#b45309";
           badge.style.fontWeight = "800";
         }
         if (title) title.textContent = "وقفة الصمت المحسوبة للترديد (لعبة الصوت الغائب)";
         if (sub) sub.textContent = "الطفل يقرأ لوالديه في الغرفة بدون مايكروفون";
-        showToast("🌟 وقفة الترديد: الطفل يقرأ لوالديه في الغرفة (Zero-Mic)");
+        showToast(`🌟 وقفة الترديد: الطفل يقرأ لوالديه (${currentVerseRepeatCount + 1}/${currentRepetitions})`);
       } else {
-        // Sheikh recitation state: advance verse or complete
-        if (currentVerseNumber >= 5) {
-          simulateSurahCompletion();
-          return;
+        // Sheikh recitation state: evaluate repetition count against currentRepetitions (LOG-03)
+        currentVerseRepeatCount++;
+        if (currentVerseRepeatCount >= currentRepetitions) {
+          currentVerseRepeatCount = 0;
+          playTone(523.25, 0.3, 'sine', 0.2);
+          showToast(`🎉 أحسنت يا بطل! أتممت التكرار (${currentRepetitions} مرات)`);
+          advanceToNextVerse();
+        } else {
+          playTone(523.25, 0.2, 'sine', 0.2);
+          if (avatar) {
+            avatar.textContent = "👦📖";
+            avatar.style.transform = "scale(1.0)";
+          }
+          if (badge) {
+            badge.innerHTML = `🎙️ الشيخ المنشاوي يعيد الآية (${currentVerseRepeatCount + 1} من ${currentRepetitions})...`;
+            badge.style.color = "#065f46";
+            badge.style.fontWeight = "700";
+          }
+          if (sub) sub.textContent = "👆 اضغط هنا لمحاكاة لمسة الوالد الخفية في أي مكان";
+          showToast(`🔁 إعادة التلاوة: تكرار ${currentVerseRepeatCount + 1} من ${currentRepetitions}`);
         }
-        currentVerseNumber++;
-        if (avatar) {
-          avatar.textContent = "👦📖";
-          avatar.style.transform = "scale(1.0)";
-        }
-        if (badge) {
-          badge.innerHTML = "🎙️ الشيخ المنشاوي يتلو الآية...";
-          badge.style.color = "#065f46";
-          badge.style.fontWeight = "700";
-        }
-        if (sub) sub.textContent = "👆 اضغط هنا لمحاكاة لمسة الوالد الخفية في أي مكان";
-        showToast(`🎙️ الشيخ المنشاوي يتلو الآية ${currentVerseNumber} من سورة الفلق`);
-
-        updateVerseDisplay(currentVerseNumber);
       }
     }
 
@@ -3664,6 +3771,8 @@ Actions:
 
     function restartSurah() {
       currentVerseNumber = 1;
+      currentVerseRepeatCount = 0;
+      isVerseTransitionLocked = false;
       isSheikhTurn = true;
       updateVerseDisplay(1);
       const avatar = document.getElementById("simAvatarGraphic");
